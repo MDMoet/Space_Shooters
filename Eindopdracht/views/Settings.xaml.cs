@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,25 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Eindopdracht.classes;
-using Eindopdracht.views;
 
-namespace Eindopdracht
+namespace Eindopdracht.views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Settings : UserControl
     {
-        public ViewHandler VarViewHandler { get; set; }
-        public MainWindow()
+        public Settings()
         {
             InitializeComponent();
-            VarViewHandler = new ViewHandler();
-            DataContext = VarViewHandler;
         }
     }
 }
-

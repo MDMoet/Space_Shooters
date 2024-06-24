@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="Eindopdracht.views.Game"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Eindopdracht"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:classes="clr-namespace:Eindopdracht.classes"
+             d:DataContext="{d:DesignInstance Type=classes:ViewHandler}"
+             mc:Ignorable="d"
+             Loaded="MainWindow_Loaded"
+             d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.Resources>
+        <!-- Common Font and Stroke Style for OutlinedTextControl -->
+        <Style x:Key="OutlinedTextStyle" TargetType="{x:Type local:OutlinedTextControl}">
+            <Setter Property="FontFamily" Value="Montserrat Subrayada" />
+            <Setter Property="StrokeThickness" Value="2.5" />
+        </Style>
+    </UserControl.Resources>
+    <!-- Window Grid -->
+    <Viewbox>
+        <Grid Width="800" Height="500" Background="Black">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="12*"/>
+                <RowDefinition Height="2.5*"/>
+            </Grid.RowDefinitions>
+            <!-- Wave TextBlock -->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Wave: " FontSize="20" Foreground="#DFC900" />
+                <TextBlock Text="1" FontSize="20" Foreground="#DFC900" />
+            </StackPanel>
+
+            <!-- Main Grid -->
+            <Grid x:Name="grMainGrid" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="8*" />
+                </Grid.RowDefinitions>
+                <!-- Entity Spawning Grid-->
+                <Grid Background="Red" Opacity="0.7" x:Name="grEntitySpawnArea">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Rectangle x:Name="rcEntitySpawner1" Width="50" Fill="#AFC100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner2" Width="50" Fill="#BFC100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner3" Width="50" Fill="#CFC100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner4" Width="50" Fill="#DFC100" Margin="0,0,15,0" />
+                        <Rectangle x:Name="rcEntitySpawner5" Width="50" Fill="#EFC100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner6" Width="50" Fill="#FFC100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner7" Width="50" Fill="#AAC100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner8" Width="50" Fill="#ABD100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner9" Width="50" Fill="#ACF100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner10" Width="50" Fill="#FFF100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner11" Width="50" Fill="#BDF100" Margin="0,0,15,0"/>
+                        <Rectangle x:Name="rcEntitySpawner12" Width="50" Fill="#BEF100" />
+                    </StackPanel>
+                </Grid>
+                <!-- User Grid-->
+                <Grid x:Name="grUserUI" Panel.ZIndex="2" Grid.Row="1">
+                    <local:OutlinedTextControl x:Name="tbGameTimer" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="{Binding Time, Mode=TwoWay}" BorderBrush="Yellow" Loaded="tbGameTimer_Loaded"/>
+                    <Border x:Name="boPauseGame" Width="250" Height="300" BorderBrush="#DFC900" BorderThickness="2" Visibility="Collapsed">
+                        <Grid Width="250" Height="300">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <local:OutlinedTextControl HorizontalAlignment="Center" FontSize="40" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Paused" BorderBrush="Yellow"/>
+                            <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
+                                <local:OutlinedTextControl FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Current Wave: " BorderBrush="Yellow" StrokeThickness="1"/>
+                                <local:OutlinedTextControl FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="1" BorderBrush="Yellow" StrokeThickness="1"/>
+                            </StackPanel>
+                            <Button Click="ContinueGame" Grid.Row="2" Width="150" Margin="15" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1">
+                                <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Continue" BorderBrush="Yellow" StrokeThickness="1" />
+                            </Button>
+                            <Button Grid.Row="3" Width="150" Margin="15" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1">
+                                <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Give up" BorderBrush="Yellow" StrokeThickness="1" />
+                            </Button>
+                            <Button Click="ExitToDesktop" Grid.Row="4" Width="150" Margin="15" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1">
+                                <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Exit to desktop" BorderBrush="Yellow" StrokeThickness="1"/>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+                <!-- Enitty Movement Grid-->
+                <Grid x:Name="grEntityArea" Background="Gray" Opacity="0.7" Grid.Row="1" >
+                    <Border x:Name="boEntityHitBox" Width="50" Height="50" BorderBrush="Red" BorderThickness="1">
+                        <Image x:Name="imgEntity" Source="../img/Skins/Entity_Skins/Entity_Default.png" />
+                    </Border>
+                </Grid>
+            </Grid>
+            <!-- User Movement area Grid-->
+            <Grid x:Name="grUserArea" Background="Green" Opacity="0.7" Grid.Row="2">
+                <Border x:Name="boUserHitBox"  Width="75" Height="75" BorderBrush="Red" BorderThickness="1">
+                    <Image x:Name="imgUser" Source="../img/Skins/User_Skins/User_Default.png" />
+                </Border>
+            </Grid>
+        </Grid>
+    </Viewbox>
+</UserControl>

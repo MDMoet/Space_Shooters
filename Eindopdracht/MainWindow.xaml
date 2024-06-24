@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Eindopdracht"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        ResizeMode="NoResize" 
+        WindowState="Maximized" 
+        WindowStyle="None"
+        Title="Space Shooters" Height="450" Width="800">
     <Grid>
-        <Image></Image>
+        <Viewbox Stretch="UniformToFill">
+            <Image Source="img/Space_Background.png"></Image>
+        </Viewbox>
+        <Grid Panel.ZIndex="2">
+            <ContentControl Grid.Row="1" Content="{Binding View}"/>
+        </Grid>
     </Grid>
 </Window>
