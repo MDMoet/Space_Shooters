@@ -18,7 +18,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using static Eindopdracht.classes.UserKeyBinds;
+using static Eindopdracht.classes.GameStatsHandler;
 using static Eindopdracht.classes.GameTick;
+using static Eindopdracht.classes.User;
+using static Eindopdracht.classes.WaveController;
 
 namespace Eindopdracht.views
 {
@@ -33,33 +36,66 @@ namespace Eindopdracht.views
             InitializeComponent();
             // Set the view in the ViewHandler to this view
             this.VarViewHandler = VarViewHandler;
-            // Set the datacontext of the view to the ViewHandler
+            // Create a new instance of the StartingTimer class
             StartingTimer timer = new StartingTimer();
             // Subscribe to the CountdownCompleted event
             timer.CountdownCompleted += Timer_CountdownCompleted;
             // Set the datacontext of the textblock to the timer (Time in StartingTimer class)
             tbGameTimer.DataContext = timer;
+            // Create a new instance of the WaveNumber class
+            WaveNumber waveCounter = new WaveNumber();
+            // Set the datacontext of the textblock to the waveCounter (Wave in WaveNumber class)
+            tbWaveNum.DataContext = waveCounter;
             // Start the ticks, the parameter is false because the game is not paused
             Paused = false;
             Tick();
             GetDataFromDB();
+            GetStatsFromDB();
         }
 
         private async void Timer_CountdownCompleted(object sender, EventArgs e)
         {
-            // Clear the binding to avoid an error when setting the text
-            BindingOperations.ClearBinding(tbGameTimer, OutlinedTextControl.TextProperty);
-            // Set the text to "Start!"
-            tbGameTimer.Text = "Start!";
-            // Wait for 750ms
-            await Task.Delay(750);
-            // Remove the text (RemoveAt(0) is possible, because the textblock will always be the first item in that grid)
-            grUserUI.Children.RemoveAt(0);
+            while (true)
+            {
+                if (Paused)
+                {
+                    // Wait for 200ms to reduce the CPU usage
+                    await Task.Delay(200);
+                    // Skip the rest of the loop but don't break it
+                    continue;
+                }
+                // Clear the binding to avoid an error when setting the text
+                BindingOperations.ClearBinding(tbGameTimer, OutlinedTextControl.TextProperty);
+                // Set the text to "Start!"
+                tbGameTimer.Text = "Start!";
+                // Loops through this for every tick, making you wait 1 second
+                for (int i = 0; i < _tickRate; i++)
+                {
+                    // Check if the game is paused
+                    if (Paused)
+                    {
+                        // Wait for 200ms to reduce the CPU usage
+                        await Task.Delay(200);
+                        // Minus the i to ensure that the loop stays running even while paused
+                        i--;
+                        // Skip the rest of the loop and wait for the next tick
+                        continue;
+                    }
+                    // Wait for the tick
+                    await Task.Delay(tickMs);
+                }
+                // Remove the textblock from the grid
+                MainGrid.Children.Remove(tbGameTimer);
+                _gameStarted = true;
+                break;
+            }
         }
 
         private void ExitToDesktop(object sender, RoutedEventArgs e)
         {
             // Close the application
+            UpdateGameStats();
+
             System.Windows.Application.Current.Shutdown();
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -72,7 +108,9 @@ namespace Eindopdracht.views
                 // Set the pause menu to the border variable in the GameKeyDown class
                 _boPause = boPauseGame,
                 // Set the user to the border variable in the GameKeyDown class
-                _boUser = boUserHitBox
+                _boUser = boUserHitBox,
+               // Set the main grid to the grid variable in the GameKeyDown class
+                _grMainGrid = grMainGrid
             };
             // Subscribe to the KeyDown event
             window.KeyDown += keyDown.KeyPressed;
@@ -81,11 +119,7 @@ namespace Eindopdracht.views
         {
             // Hide the pause menu
             boPauseGame.Visibility = Visibility.Collapsed;
-        }
-
-        private void tbGameTimer_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            Paused = false;
         }
     }
 }

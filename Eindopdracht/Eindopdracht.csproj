@@ -110,11 +110,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="classes\GameKeyDown.cs" />
+    <Compile Include="classes\UserStatsHandler.cs" />
     <Compile Include="classes\GameTick.cs" />
     <Compile Include="classes\StartingTimer.cs" />
     <Compile Include="classes\UserKeyBinds.cs" />
-    <Compile Include="classes\UserMovement.cs" />
+    <Compile Include="classes\UserActions.cs" />
+    <Compile Include="classes\UserStats.cs" />
     <Compile Include="classes\ViewHandler.cs" />
+    <Compile Include="classes\WaveController.cs" />
     <Compile Include="OutlinedTextControl.xaml.cs">
       <DependentUpon>OutlinedTextControl.xaml</DependentUpon>
     </Compile>
