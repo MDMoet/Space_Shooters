@@ -109,7 +109,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="classes\EntityConfiguration.cs" />
+    <Compile Include="classes\EntityCreation.cs" />
+    <Compile Include="classes\EntitySpawning.cs" />
     <Compile Include="classes\GameKeyDown.cs" />
+    <Compile Include="classes\GeneralGameVariables.cs" />
+    <Compile Include="classes\PlayerHPHandler.cs" />
     <Compile Include="classes\UserStatsHandler.cs" />
     <Compile Include="classes\GameTick.cs" />
     <Compile Include="classes\StartingTimer.cs" />

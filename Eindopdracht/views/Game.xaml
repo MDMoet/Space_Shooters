@@ -35,13 +35,13 @@
                         <local:OutlinedTextControl FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Current Wave: " BorderBrush="Yellow" StrokeThickness="1"/>
                         <local:OutlinedTextControl x:Name="tbWaveNum" FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="{Binding Wave, Mode=TwoWay}" BorderBrush="Yellow" StrokeThickness="1"/>
                     </StackPanel>
-                    <Button Click="ContinueGame" Grid.Row="2" Width="150" Margin="15" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1">
+                    <Button Click="ContinueGame" Grid.Row="2" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
                         <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Continue" BorderBrush="Yellow" StrokeThickness="1" />
                     </Button>
-                    <Button Grid.Row="3" Width="150" Margin="15" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1">
+                    <Button Grid.Row="3" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
                         <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Give up" BorderBrush="Yellow" StrokeThickness="1" />
                     </Button>
-                    <Button Click="ExitToDesktop" Grid.Row="4" Width="150" Margin="15" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1">
+                    <Button Click="ExitToDesktop" Grid.Row="4" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
                         <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Exit to desktop" BorderBrush="Yellow" StrokeThickness="1"/>
                     </Button>
                 </Grid>
@@ -50,21 +50,18 @@
             <!-- Main Gameplay Area -->
             <Grid x:Name="MainGrid" Grid.Row="0">
                 <local:OutlinedTextControl x:Name="tbGameTimer" Style="{StaticResource OutlinedTextStyle}" FontSize="90" Stroke="#DFC900" StrokeThickness="5" Text="{Binding Time, Mode=TwoWay}" BorderBrush="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <!-- Entity Spawning Area -->
-                <Grid x:Name="grEntitySpawnArea" Background="Transparent">
-                    <!-- Entities like enemies can be dynamically added here -->
-                </Grid>
-                <!-- Entity Movement Area -->
-                <Grid x:Name="grEntityArea" Background="Transparent">
-                    <!-- Entity movement logic can be handled here -->
-                </Grid>
+                <Border x:Name="boUserHitBox" Width="75" Height="87" BorderBrush="Red" BorderThickness="1" Margin="0,412,0,0">
+                    <StackPanel>
+                        <Image x:Name="imgUser" Source="../img/Skins/User_Skins/User_Default.png" />
+                        <ProgressBar x:Name="pbUserHealth" Height="5" BorderBrush="Transparent" Value="{Binding PlayerHP}" Background="Gray"   />
+                    </StackPanel>
+                </Border>
             </Grid>
 
             <!-- User Movement and Action Area -->
             <Grid x:Name="grUserArea" Background="Transparent" Grid.Row="1">
-                <Border x:Name="boUserHitBox" Width="75" Height="75" BorderBrush="Red" BorderThickness="1">
-                    <Image x:Name="imgUser" Source="../img/Skins/User_Skins/User_Default.png" />
-                </Border>
+                
+               
                 <!-- Laser shooting logic and visuals can be added here -->
             </Grid>
         </Grid>

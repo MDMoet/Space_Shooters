@@ -20,8 +20,8 @@ using System.Windows.Threading;
 using static Eindopdracht.classes.UserKeyBinds;
 using static Eindopdracht.classes.GameStatsHandler;
 using static Eindopdracht.classes.GameTick;
+using static Eindopdracht.classes.UserStats;
 using static Eindopdracht.classes.User;
-using static Eindopdracht.classes.WaveController;
 
 namespace Eindopdracht.views
 {
@@ -42,11 +42,18 @@ namespace Eindopdracht.views
             timer.CountdownCompleted += Timer_CountdownCompleted;
             // Set the datacontext of the textblock to the timer (Time in StartingTimer class)
             tbGameTimer.DataContext = timer;
+
             // Create a new instance of the WaveNumber class
             WaveNumber waveCounter = new WaveNumber();
             // Set the datacontext of the textblock to the waveCounter (Wave in WaveNumber class)
             tbWaveNum.DataContext = waveCounter;
-            // Start the ticks, the parameter is false because the game is not paused
+
+            // Create a new instance of the WaveNumber class
+            PlayerHPHandler hpAmount = new PlayerHPHandler();
+            // Set the datacontext of the textblock to the waveCounter (Wave in WaveNumber class)
+            pbUserHealth.DataContext = hpAmount;
+            pbUserHealth.Maximum = health;
+
             Paused = false;
             Tick();
             GetDataFromDB();
@@ -68,8 +75,8 @@ namespace Eindopdracht.views
                 BindingOperations.ClearBinding(tbGameTimer, OutlinedTextControl.TextProperty);
                 // Set the text to "Start!"
                 tbGameTimer.Text = "Start!";
-                // Loops through this for every tick, making you wait 1 second
-                for (int i = 0; i < _tickRate; i++)
+                // Loops through this for every tick, making you wait 1 second, change the '* 1' into any diserable number of seconds you want it to way.
+                for (int i = 0; i < _tickRate * 1; i++)
                 {
                     // Check if the game is paused
                     if (Paused)
@@ -86,7 +93,8 @@ namespace Eindopdracht.views
                 }
                 // Remove the textblock from the grid
                 MainGrid.Children.Remove(tbGameTimer);
-                _gameStarted = true;
+                WaveController waveController = new WaveController();
+                waveController.StartWave();
                 break;
             }
         }
@@ -103,14 +111,14 @@ namespace Eindopdracht.views
             // Get the window
             var window = Window.GetWindow(this);
             // Subscribe to the KeyDown event
+            GameKeyDown._grMainGrid = MainGrid;
+
             GameKeyDown keyDown = new GameKeyDown
             {
                 // Set the pause menu to the border variable in the GameKeyDown class
                 _boPause = boPauseGame,
                 // Set the user to the border variable in the GameKeyDown class
-                _boUser = boUserHitBox,
-               // Set the main grid to the grid variable in the GameKeyDown class
-                _grMainGrid = grMainGrid
+                _boUser = boUserHitBox
             };
             // Subscribe to the KeyDown event
             window.KeyDown += keyDown.KeyPressed;
