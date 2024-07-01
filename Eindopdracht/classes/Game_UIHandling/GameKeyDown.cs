@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Eindopdracht.views;
 using static Eindopdracht.classes.UserKeyBinds;
-using static Eindopdracht.classes.UserActions;
 using static Eindopdracht.classes.UserStats;
 using System.Runtime.CompilerServices;
 
@@ -20,8 +19,9 @@ namespace Eindopdracht.classes
         // Create a border object for the pause menu
         internal Border _boPause;
         internal Border _boUser;
-        internal Grid _grMainGrid;
+        internal static Grid _grMainGrid;
         internal bool wait = false;
+        private readonly UserActions userActions = new UserActions();
 
         public async void KeyPressed(object sender, KeyEventArgs e)
         {
@@ -40,19 +40,19 @@ namespace Eindopdracht.classes
             if (e.Key == Move_Left)
             {
                 // Move the user to the left
-                Movement.MoveLeft(_boUser);
+                userActions.MoveLeft(_boUser);
             }
             if (e.Key == Move_Right)
             {
                 // Move the user to the right
-                Movement.MoveRight(_boUser);
+                userActions.MoveRight(_boUser);
             }
             // Check if the attack key is pressed
             if (e.Key == Attack_1)
             {
                 if (!wait)
                 {
-                    Attack.Attack1(_boUser, _grMainGrid);
+                    userActions.Attack1(_boUser, _grMainGrid);
                     wait = true;
                     await Task.Delay(base_attack_speed);
                     wait = false;
@@ -89,3 +89,4 @@ namespace Eindopdracht.classes
         }
     }
 }
+

@@ -109,15 +109,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="classes\GameKeyDown.cs" />
-    <Compile Include="classes\UserStatsHandler.cs" />
-    <Compile Include="classes\GameTick.cs" />
-    <Compile Include="classes\StartingTimer.cs" />
-    <Compile Include="classes\UserKeyBinds.cs" />
-    <Compile Include="classes\UserActions.cs" />
-    <Compile Include="classes\UserStats.cs" />
-    <Compile Include="classes\ViewHandler.cs" />
-    <Compile Include="classes\WaveController.cs" />
+    <Compile Include="classes\Game_EntityHandling\EntityConfiguration.cs" />
+    <Compile Include="classes\Game_EntityHandling\EntityCreation.cs" />
+    <Compile Include="classes\Game_EntityHandling\EntitySpawning.cs" />
+    <Compile Include="classes\Game_UIHandling\GameKeyDown.cs" />
+    <Compile Include="classes\Game_DataHandling\GeneralGameVariables.cs" />
+    <Compile Include="classes\Game_PlayerHandling\PlayerHPHandler.cs" />
+    <Compile Include="classes\Game_PlayerHandling\UserStatsHandler.cs" />
+    <Compile Include="classes\Game_DataHandling\GameTick.cs" />
+    <Compile Include="classes\Game_DataHandling\StartingTimer.cs" />
+    <Compile Include="classes\Game_PlayerHandling\UserKeyBinds.cs" />
+    <Compile Include="classes\Game_PlayerHandling\UserActions.cs" />
+    <Compile Include="classes\Game_PlayerHandling\UserStats.cs" />
+    <Compile Include="classes\UIHandling\ViewHandler.cs" />
+    <Compile Include="classes\Game_EntityHandling\WaveController.cs" />
     <Compile Include="OutlinedTextControl.xaml.cs">
       <DependentUpon>OutlinedTextControl.xaml</DependentUpon>
     </Compile>

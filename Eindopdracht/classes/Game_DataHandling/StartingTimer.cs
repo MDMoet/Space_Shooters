@@ -16,7 +16,7 @@ namespace Eindopdracht.classes
         public event EventHandler CountdownCompleted;
 
         // Create a private int to store the time
-        private int _time = 3;
+        private int _time = 1;
         public int Time
         {
             // Get the time

@@ -54,24 +54,27 @@ namespace Eindopdracht.classes
             }
         }
     }
-
+    internal class TempUserStats
+    {
+        public static int level = UserStats.level;
+    }
     internal class UserStats 
     {
-        public static int level;
-        public static int level_progression;
-        public static int level_points;
-        public static int health;
-        public static int base_damage;
-        public static int base_attack_speed;
+        public static int level = 0;
+        public static int level_progression = 0;
+        public static int level_points = 0;
+        public static int health = 0;
+        public static int base_damage = 0;
+        public static int base_attack_speed = 0;
     }
     internal class UserGameStats
     {
-        public static int wave_pr;
-        public static int deaths;
-        public static int kills;
-        public static int damage_done;
-        public static int missed_shots;
-        public static int hit_shots;
-        public static int average_accuracy;
+        public static int wave_pr = 0;
+        public static int deaths = 0;
+        public static int kills = 0;
+        public static int damage_done = 0;
+        public static int missed_shots = 0;
+        public static int hit_shots = 0;
+        public static int average_accuracy = 0;
     }
 }
