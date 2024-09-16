@@ -20,14 +20,12 @@ namespace Space_Shooters.classes.Game.Game_UIHandling
     public class GameKeyDown
     {
         // Create a border object for the pause menu
-        internal Border _boPause = new();
-        internal Border _boUser = new();
-        internal static Grid _grMainGrid = new();
-        internal bool wait = false;
-        private readonly UserActions userActions = new();
+        private static bool wait = false;
+        private static readonly UserActions userActions = new();
 
-        public async void KeyPressed(object sender, KeyEventArgs e)
+        public static async void KeyPressed(object sender, KeyEventArgs e)
         {
+            
             // Check if the escape key is pressed and the pause menu is visible
             if (e.Key == Pause_Game)
             {
@@ -43,53 +41,57 @@ namespace Space_Shooters.classes.Game.Game_UIHandling
             if (e.Key == Move_Left)
             {
                 // Move the user to the left
-                userActions.MoveLeft(_boUser);
+                userActions.MoveLeft();
             }
             if (e.Key == Move_Right)
             {
                 // Move the user to the right
-                userActions.MoveRight(_boUser);
+                userActions.MoveRight();
             }
             // Check if the attack key is pressed
             if (e.Key == Attack_1)
             {
                 if (!wait)
                 {
-                    userActions.Attack1(_boUser, _grMainGrid);
+                    userActions.Attack1();
                     wait = true;
-                    await Task.Delay(userStat.BaseAttackSpeed);
+                    await Task.Delay(_UserModel.UserStat.BaseAttackSpeed);
                     wait = false;
                 }
             }
         }
 
         // Method to handle the pause button
-        public void PausePressed(object sender, KeyEventArgs e)
+        public static void PausePressed(object sender, KeyEventArgs e)
         {
-            // Check if the escape key is pressed
-            if (_boPause.Visibility == Visibility.Visible)
+            if (!_WaveModel.GameEnded)
             {
-                // Hide the pause menu
-                ContinueGame(sender, e);
-            }
-            else
-            {
-                // Show the pause menu
-                PauseGame(sender, e);
+                // Check if the escape key is pressed
+                if (_WindowModel.BoPause.Visibility == Visibility.Visible)
+                {
+                    // Hide the pause menu
+                    ContinueGame(sender, e);
+                }
+                else
+                {
+                    // Show the pause menu
+                    PauseGame(sender, e);
+                }
             }
         }
-        public void ContinueGame(object sender, RoutedEventArgs e)
+        public static void ContinueGame(object sender, RoutedEventArgs e)
         {
             // Hide the pause menu
             GameTick.Paused = false;
-            _boPause.Visibility = Visibility.Collapsed;
+            _WindowModel.BoPause.Visibility = Visibility.Collapsed;
         }
-        public void PauseGame(object sender, RoutedEventArgs e)
+        public static void PauseGame(object sender, RoutedEventArgs e)
         {
             // Show the pause menu
             GameTick.Paused = true;
-            _boPause.Visibility = Visibility.Visible;
+            _WindowModel.BoPause.Visibility = Visibility.Visible;
         }
+        
     }
 }
 

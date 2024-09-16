@@ -10,30 +10,26 @@ using MySql.Data.MySqlClient;
 using System.Configuration;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
-using static Space_Shooters.classes.Game.Game_EntityHandling.EntityCreation;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
 using static Space_Shooters.classes.Game.Game_EntityHandling.DetermineEntity;
-using static Space_Shooters.classes.Game.Game_PlayerHandling.PlayerHPHandler;
+using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using Google.Protobuf.WellKnownTypes;
 using Org.BouncyCastle.Asn1.Mozilla;
 using Space_Shooters.views;
 using Space_Shooters.Models;
 using static Google.Protobuf.WellKnownTypes.Field.Types;
+using Space_Shooters.classes.Game.Game_PlayerHandling;
 
 namespace Space_Shooters.classes.Game.Game_EntityHandling
 {
     internal class EntityWave
     {
-        private readonly int wave = Wave;
-        private int waveMax = 5;
-        internal static int entityWaveAmount;
-        internal static int index;
-
-        internal int GetEntityWaveAmount()
+        internal static int GetEntityWaveAmount()
         {
             Random random = new();
-            waveMax += 3;
-            int waveAmount = random.Next(wave, waveMax + wave);
+            _WaveModel.WaveMin += 1;
+            _WaveModel.WaveMax += 2;
+            int waveAmount = random.Next(_WaveModel.WaveMin, _WaveModel.WaveMax);
 
             return waveAmount;
         }
@@ -42,41 +38,49 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             public InitiateSpawn() {
                
             }
-            public async static void StartSpawning(Grid _MainGrid)
-            { 
-                EntityWave entityWave = new();
-                entityWaveAmount = entityWave.GetEntityWaveAmount();
-                MessageBox.Show($"Wave: {Wave} - Amount: {entityWaveAmount}");
-                for (index = 0; index < entityWaveAmount; index++)
+            public async static void StartSpawning()
+            {
+                if(_WaveModel.WaveStarted)
                 {
+                    return;
+                } 
+                _WaveModel.WaveStarted = true;
+                EntitiesLeft = Entity_Wave_Amount = GetEntityWaveAmount();
+                for (_WaveModel.SpawnIndex = 1; _WaveModel.SpawnIndex <= Entity_Wave_Amount; _WaveModel.SpawnIndex++)
+                {
+                    if(_WaveModel.GameEnded)
+                    {
+                        _WaveModel.WaveStarted = false;
+                        break;
+                    }
+                    //MessageBox.Show(index.ToString());
                     if (Paused)
                     {
                         await Task.Delay(200);
-                        index--; // Decrement i to retry spawning this entity.
+                        _WaveModel.SpawnIndex--; // Decrement i to retry spawning this entity.
                         continue;
                     }
-                    DetermineEntityType();
-                    SpawnEntity(_MainGrid, entityWaveAmount);
+                    EnemyCreation.CreateEnemy();
+                    SpawnEntity();
                     await Task.Delay(Enemy_ms_Spawning); // Wait for the specified tick rate in milliseconds.
                 }
+                _WaveModel.WaveStarted = false;
             }
-
-            private static void SpawnEntity(Grid _MainGrid, int entityWaveAmount)
+            private static void SpawnEntity()
             {
-                EntitySpawning.SpawnEntityConfiguration(_MainGrid, _Enemy, entityWaveAmount);
+                EntitySpawning.SpawnEntityConfiguration();
             }
         }
     }
     internal static class EntitySpawning
     {
-        public static List<Grid> entities = [];
-        public static void SpawnEntityConfiguration(Grid _MainGrid, Enemy enemy, int entityWaveAmount)
+        public static void SpawnEntityConfiguration()
         {
-            int sizeIncrease = 5 * enemy.Level;
-            int lifeIncrease = 7 * enemy.Level;
-            if (enemy.Level < 5)
+            int sizeIncrease = 5 * _Enemy.Level;
+            int lifeIncrease = 7 * _Enemy.Level;
+            if (_Enemy.Level < 5)
             {
-                lifeIncrease -= 7 * enemy.Level;
+                lifeIncrease -= 7 * _Enemy.Level;
             }
 
             Random random = new();
@@ -101,7 +105,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
 
             Image Entity = new()
             {
-                Source = new BitmapImage(new Uri($"pack://application:,,,/img/skins/entity_skins/{enemy.Skin}.png", UriKind.Absolute)),
+                Source = new BitmapImage(new Uri($"pack://application:,,,/img/skins/entity_skins/{_Enemy.Skin}.png", UriKind.Absolute)),
                 Width = Entity_HitBox.Width - 4,
                 Height = Entity_HitBox.Height - 4
             };
@@ -111,8 +115,8 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             {
                 Width = Entity_HitBox.Width,
                 Height = 5,
-                Maximum = enemy.Health + lifeIncrease, 
-                Value = enemy.Health + lifeIncrease,
+                Maximum = _Enemy.Health + lifeIncrease, 
+                Value = _Enemy.Health + lifeIncrease,
                 Background = System.Windows.Media.Brushes.Red,
                 Foreground = System.Windows.Media.Brushes.Green,
                 BorderBrush = System.Windows.Media.Brushes.Black,
@@ -122,15 +126,14 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             Entity_Container.Children.Add(Entity);
             Entity_Container.Children.Add(Entity_HitBox);
             Entity_Container.Children.Add(Entity_HealthBar);
-            _MainGrid.Children.Add(Entity_Container);
+            _WindowModel.MainGrid.Children.Add(Entity_Container);
 
-            entities.Add(Entity_Container);
-            enemies[enemy.Name] = enemy;
+            EntitiesList.Add(Entity_Container);
 
-            MoveEntity(Entity_Container, _MainGrid, enemy, sizeIncrease, entityWaveAmount);
+            MoveEntity(Entity_Container, sizeIncrease);
         }
 
-        public static async void MoveEntity(Grid Entity_Container, Grid _MainGrid, Enemy enemy, int addedWeight, int entityWaveAmount)
+        public static async void MoveEntity(Grid Entity_Container, int addedWeight)
         {
             while (Entity_Container.Margin.Bottom > -650)
             {
@@ -139,17 +142,18 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                     await Task.Delay(200);
                     continue;
                 }
-                Entity_Container.Margin = new Thickness(Entity_Container.Margin.Left, Entity_Container.Margin.Top, Entity_Container.Margin.Right, Entity_Container.Margin.Bottom - enemy.Base_speed);
+                Entity_Container.Margin = new Thickness(Entity_Container.Margin.Left, Entity_Container.Margin.Top, Entity_Container.Margin.Right, Entity_Container.Margin.Bottom - _Enemy.Base_speed);
                 await Task.Delay(Enemy_ms_Movement + addedWeight);
 
             }
 
-            if (_MainGrid.Children.Contains(Entity_Container))
+            if (_WindowModel.MainGrid.Children.Contains(Entity_Container))
             {
-                _MainGrid.Children.Remove(Entity_Container);
-                entities.Remove(Entity_Container);
-                WaveCheck.CheckForEntities(_MainGrid, Entity_Container, entityWaveAmount);
-                DecreaseHP(enemy.Base_damage);
+                _WindowModel.MainGrid.Children.Remove(Entity_Container);
+                EntitiesList.Remove(Entity_Container);
+                EntitiesLeft--;
+                WaveCheck.CheckForEntities();
+                PlayerDamageHandler.HandlePlayerDamage(_Enemy.Base_damage);
             }
         }
     }

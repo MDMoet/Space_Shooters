@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Space_Shooters.classes.Game.Game_DataHandling;
+using Space_Shooters.classes.Game.Game_EntityHandling;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
+using static Space_Shooters.views.Game;
+using Space_Shooters.views;
 
 
 namespace Space_Shooters.classes.Game.Game_VariableHandling
@@ -17,7 +23,7 @@ namespace Space_Shooters.classes.Game.Game_VariableHandling
         public event EventHandler CountdownCompleted = delegate { };
 
         // Create a private int to store the time
-        private int _time = 3;
+        public int _time = 3;
         public int Time
         {
             // Get the time
@@ -75,9 +81,9 @@ namespace Space_Shooters.classes.Game.Game_VariableHandling
         }
 
         // Method to raise the CountdownCompleted event
-        protected void OnCountdownCompleted()
+        private void OnCountdownCompleted()
         {
-            CountdownCompleted?.Invoke(this, EventArgs.Empty);
+           StartCountDownCompleted();
         }
     }
 }

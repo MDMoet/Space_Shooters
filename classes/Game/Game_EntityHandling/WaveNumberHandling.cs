@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using static Space_Shooters.classes.Game.Game_UIHandling.GameKeyDown;
+using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using System.Windows.Controls;
 
 namespace Space_Shooters.classes.Game.Game_EntityHandling
@@ -14,13 +14,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
     public class WaveNumberHandling
     {
         internal bool _waveStarted = true;
-        internal Grid _MainGrid = _grMainGrid;
 
-        internal void StartWave()
-        {
-            // Start spawning the entities
-            EntityWave.InitiateSpawn.StartSpawning(_MainGrid);
-        }
     }
 
     public class WaveNumber : INotifyPropertyChanged
@@ -28,7 +22,8 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private static int _wave = 1;
-        public static int Wave
+
+        internal static int Wave
         {
             get => _wave;
             set

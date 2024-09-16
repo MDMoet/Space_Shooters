@@ -5,74 +5,133 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
-using static Space_Shooters.classes.Game.Game_EntityHandling.EntityData;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using Space_Shooters.views;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
+using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using Space_Shooters.classes.Game.Game_DataHandling;
+using Space_Shooters.Context;
+using Space_Shooters.Models;
 
 namespace Space_Shooters.classes.Game.Game_EntityHandling
 {
     internal class DetermineEntity
     {
-        internal static void DetermineEntityType()
+        internal static void GetEntityData()
         {
-            int wave = Wave;
-            Dictionary<string, object> entityData = [];
-            if (wave >= 1)
+            int EntityId_ = WaveCheck();
+            Entity EntityClass_ = new();
+            EntitySkin EntitySkinClass_ = new();
+            EntityStat EntityStatsClass_ = new();
+            EntityEquipment EntityEquipmentClass_ = new();
+            using var context = new GameContext();
+            // Assuming you have a primary key 'Id' in your UserStats table
+            var Entity_ = context.Entities.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
+            if (Entity_ != null)
             {
-                _entityName = "Newborn alien";
-                entityData = GetEntityDataFromDB();
+                EntityClass_.Name = Entity_.Name;
             }
-            if (wave >= 3)
+            var EntitySkin_ = context.EntitySkins.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
+            if (EntitySkin_ != null)
             {
-                _entityName = "Alien child";
-                entityData = GetEntityDataFromDB();
+                EntitySkinClass_.Skin = EntitySkin_.Skin;
             }
-            if (wave >= 5)
+            var EntityStats_ = context.EntityStats.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
+            if (EntityStats_ != null)
             {
-                _entityName = "Mature alien";
-                entityData = GetEntityDataFromDB();
+                EntityStatsClass_.MinLevel = EntityStats_.MinLevel;
+                EntityStatsClass_.MaxLevel = EntityStats_.MaxLevel;
+                EntityStatsClass_.Health = EntityStats_.Health;
+                EntityStatsClass_.BaseDamage = EntityStats_.BaseDamage;
+                EntityStatsClass_.BaseSpeed = EntityStats_.BaseSpeed;
+                EntityStatsClass_.BaseAttackSpeed = EntityStats_.BaseAttackSpeed;
             }
-            if (entityData.TryGetValue("name", out _) && entityData.TryGetValue("min_level", out _) &&
-    entityData.TryGetValue("max_level", out _) && entityData.TryGetValue("health", out _) &&
-    entityData.TryGetValue("base_damage", out _) && entityData.TryGetValue("base_speed", out _) &&
-    entityData.TryGetValue("base_attack_speed", out _) && entityData.TryGetValue("begin_spawn_wave", out _) &&
-    entityData.TryGetValue("skin", out _))
+            //var EntityEquipment_ = context.EntityEquipments.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
+            //if (EntityEquipment_ != null)
+            //{
+
+            //}
+            if (_EntityModel != null)
             {
-               EntityCreation _ = new(entityData["name"], entityData["min_level"], entityData["max_level"], entityData["health"], entityData["base_damage"], entityData["base_speed"], entityData["base_attack_speed"], entityData["begin_spawn_wave"], entityData["skin"]);
+                _EntityModel.Entity = EntityClass_;
+                _EntityModel.EntitySkin = EntitySkinClass_;
+                _EntityModel.EntityStat = EntityStatsClass_;
+                _EntityModel.EntityEquipment = EntityEquipmentClass_;
+            }else
+            {
+                _EntityModel = new()
+                {
+                    Entity = EntityClass_,
+                    EntitySkin = EntitySkinClass_,
+                    EntityStat = EntityStatsClass_,
+                    EntityEquipment = EntityEquipmentClass_
+                };
+            }
+        }
+        public static int WaveCheck()
+        {
+            int[] ia;
+            int ei_;
+            Random random = new();
+            using var context = new GameContext();
+            // Query the database to get entities that spawn in the current wave
+            var e_ = context.Entities
+                                  .Where(e => e.SpawnWave <= Wave)
+                                  .Select(e => e.EntityId) // Assuming 'Id' is the primary key
+                                  .ToArray();
+            // Assign the result to 
+            ia = e_;
+            if (ia.Length > 0)
+            {
+                return ei_ = ia[random.Next(0, e_.Length)];
             }
             else
             {
-                MessageBox.Show("Error: Entity data not found.");
+                return ei_ = ia[0];
             }
+           
         }
     }
-    internal class EntityCreation
+    internal class EnemyCreation
     {
-        public static Enemy? _Enemy;
-        internal static Dictionary<string, Enemy> enemies = [];
-        internal EntityCreation(object _name, object _miLvl, object _maLvl, object _hp, object _bd, object _bs, object _bas, object _bsw, object _skin)
+        internal static void CreateEnemy()
         {
+            DetermineEntity.GetEntityData();
             Random random = new();
-            object _lvl = random.Next((int)_miLvl, (int)_maLvl);
-            enemies[(string)_name] = CreateEnemy(_name, _lvl, _hp, _bd, _bs, _bas, _bsw, _skin);
-            _Enemy = enemies[_entityName];
+            int l_ = random.Next(_EntityModel.EntityStat.MinLevel, _EntityModel.EntityStat.MaxLevel);
+            AssignEnemy(l_);
         }
-        internal static Enemy CreateEnemy(object _name, object _lvl, object _hp, object _bd, object _bs, object _bas, object _bsw, object _skin)
+        internal static Enemy AssignEnemy(int Lvl_)
         {
-            Enemy enemy = new()
+            if (_Enemy != null)
             {
-                Name = (string)_name,
-                Level = (int)_lvl,
-                Health = (int)_hp,
-                Base_damage = (int)_bd,
-                Base_speed = (int)_bs,
-                Base_attack_speed = (int)_bas,
-                Begin_spawn_wave = (int)_bsw,
-                Skin = (string)_skin
-            };
-            return enemy;
+                _Enemy.Name = _EntityModel.Entity.Name;
+                _Enemy.Level = Lvl_;
+                _Enemy.Health = _EntityModel.EntityStat.Health;
+                _Enemy.Base_damage = _EntityModel.EntityStat.BaseDamage;
+                _Enemy.Base_speed = _EntityModel.EntityStat.BaseSpeed;
+                _Enemy.Base_attack_speed = _EntityModel.EntityStat.BaseAttackSpeed;
+                _Enemy.Skin = _EntityModel.EntitySkin.Skin;
+                return _Enemy;
+            }
+            else
+            {
+                _Enemy = new()
+                {
+                    Name = _EntityModel.Entity.Name,
+                    Level = Lvl_,
+                    Health = _EntityModel.EntityStat.Health,
+                    Base_damage = _EntityModel.EntityStat.BaseDamage,
+                    Base_speed = _EntityModel.EntityStat.BaseSpeed,
+                    Base_attack_speed = _EntityModel.EntityStat.BaseAttackSpeed,
+                    Skin = _EntityModel.EntitySkin.Skin,
+                    Item = null,
+                    Equipment = null
+                };
+                return _Enemy;
+            }
+         
         }
     }
 }

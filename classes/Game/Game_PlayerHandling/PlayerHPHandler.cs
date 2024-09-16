@@ -7,16 +7,16 @@ using System.Runtime.CompilerServices;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 
 namespace Space_Shooters.classes.Game.Game_PlayerHandling
 {
     internal class PlayerHPHandler : INotifyPropertyChanged
     {
-
         public PlayerHPHandler()
         {
-            _hp = userStat.Health; // Initialize _hp in the constructor
+            _hp = _UserModel.UserStat.Health; // Initialize _hp in the constructor
         }
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -40,7 +40,6 @@ namespace Space_Shooters.classes.Game.Game_PlayerHandling
         {
             StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyName));
         }
-
         public static void DecreaseHP(int hpToLose)
         {
             PlayerHP -= hpToLose;

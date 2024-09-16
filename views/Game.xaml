@@ -39,7 +39,7 @@
                     <Button Click="ContinueGame" Grid.Row="2" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
                         <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Continue" BorderBrush="Yellow" StrokeThickness="1" />
                     </Button>
-                    <Button Grid.Row="3" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
+                    <Button Click="GiveUp" Grid.Row="3" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
                         <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Give up" BorderBrush="Yellow" StrokeThickness="1" />
                     </Button>
                     <Button Click="ExitToDesktop" Grid.Row="4" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
@@ -54,7 +54,7 @@
                 <Border x:Name="boUserHitBox" Width="75" Height="87" BorderBrush="Transparent" BorderThickness="1" Margin="0,412,0,0">
                     <StackPanel>
                         <Image x:Name="imgUser" Source="../img/Skins/User_Skins/User_Default.png" />
-                        <ProgressBar x:Name="pbUserHealth" Height="5" BorderBrush="Black" Value="{Binding PlayerHP,Mode=TwoWay}" Foreground="Green" Background="Red"   />
+                        <ProgressBar x:Name="pbUserHealth" Height="5" BorderBrush="Black" Value="{Binding PlayerHP}" Foreground="Green" Background="Red"   />
                     </StackPanel>
                 </Border>
             </Grid>

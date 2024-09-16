@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Windows.Input;
 using System.Reflection;
 using System.Collections.Generic;
+using Space_Shooters.Context;
 
 namespace Space_Shooters.classes
 {
@@ -16,35 +17,35 @@ namespace Space_Shooters.classes
         public static Key Attack_2;
         public static Key Attack_3;
 
-        public static void GetDataFromDB()
+        public static void GetDataFromDB(int UserId_)
         {
-            // The connection string
-            string connStr = "server=127.0.0.1;database=space_shooters;uid=root;pwd=;";
-            // The query
-            string query = "SELECT keybind_enums.keybind_enum, user_actions.action FROM user_keybinds INNER JOIN keybind_enums ON user_keybinds.keybind_id = keybind_enums.keybind_id LEFT JOIN default_keybinds  ON user_keybinds.keybind_id = default_keybinds.keybind_id INNER JOIN user_actions ON user_keybinds.action_id = user_actions.action_id;";
+            using var context = new GameContext();
 
-            using MySqlConnection conn = new(connStr);
-            MySqlCommand cmd = new(query, conn);
-            conn.Open();
-
-            using MySqlDataReader reader = cmd.ExecuteReader();
-            var keyBinds = new Dictionary<string, Key>();
-            while (reader.Read())
-            {
-                string _keybindEnum = reader.GetInt32(0).ToString();
-                string _action = reader.GetString(1);
-
-                if (Enum.TryParse(_keybindEnum, out Key key))
+            var keyBinds = context.UserKeybinds
+                .Where(e => e.UserId == UserId_)
+                .Select(uk => new
                 {
-                    keyBinds[_action] = key;
+                    KeybindEnum = uk.Keybind.KeybindEnum1,
+                    uk.Action.Action
+                })
+                .ToList();
+
+            var keyBindsDict = new Dictionary<string, Key>();
+            foreach (var keyBind in keyBinds)
+            {
+                if (Enum.TryParse(keyBind.KeybindEnum.ToString(), out Key key))
+                {
+                    keyBindsDict[keyBind.Action] = key;
                 }
             }
 
-            foreach (var keyBind in keyBinds)
+            foreach (var keyBind in keyBindsDict)
             {
-                FieldInfo _field = typeof(UserKeyBinds).GetField(keyBind.Key, BindingFlags.Public | BindingFlags.Static);
-                _field?.SetValue(null, keyBind.Value);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                FieldInfo field = typeof(UserKeyBinds).GetField(keyBind.Key, BindingFlags.Public | BindingFlags.Static);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+                field?.SetValue(null, keyBind.Value);
             }
-        }
+        }        
     }
 }

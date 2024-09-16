@@ -8,16 +8,20 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
-using static Space_Shooters.classes.Game.Game_EntityHandling.EntitySpawning;
+using static Space_Shooters.classes.Game.Game_PlayerHandling.User;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
+using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using Space_Shooters.classes.Game.Game_VariableHandling;
+using static System.Net.Mime.MediaTypeNames;
+using Space_Shooters.classes.Game.Game_UIHandling;
 
 
 namespace Space_Shooters.classes.Game.Game_EntityHandling
 {
     internal class WaveClearHandling
     {
-
+       
         public WaveClearHandling() { }
 
         internal static async void WaveCleared()
@@ -32,21 +36,29 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                     continue;
                 }
                 // Set the center text to "Wave Cleared!"
-                views.Game.SetCenterText($"Wave Cleared!");
-                // Increase the wave number
+                if (!_WaveModel.GameEnded) CenterTextHandling.UpdateCenterText($"Wave Cleared!");
+                else break;// Increase the wave number
                 IncreaseWave();
+                UpdateGameStats(1);
                 // Wait for 2 seconds
-                await Wait.WaitInSeconds(2);
-                // set the center text to the wave number
-                views.Game.SetCenterText($"Wave: {Wave}");
+                if (!_WaveModel.GameEnded) await Wait.WaitInSeconds(2);
+                else break;
+                // Set the center text to "Wave: {Wave}"
+                if (!_WaveModel.GameEnded) CenterTextHandling.UpdateCenterText($"Wave: {Wave}");
+                else break;
                 // Wait for 2 seconds
-                await Wait.WaitInSeconds(2);
+                if (!_WaveModel.GameEnded) await Wait.WaitInSeconds(2);
+                else break;
                 // Clear the center text
-                views.Game.InvisCenterText();
+                if (!_WaveModel.GameEnded) _WindowModel.CenterBlock.Visibility = Visibility.Collapsed;
+                else break;
                 // Wait for 1 second
-                await Wait.WaitInSeconds(1);
-                WaveNumberHandling waveController = new();
-                waveController.StartWave();
+                if (!_WaveModel.GameEnded) await Wait.WaitInSeconds(1);
+                else break;
+                // Start spawning the next wave
+                if (!_WaveModel.GameEnded) EntityWave.InitiateSpawn.StartSpawning();
+                else break;
+                
                 break;
             }
         }
@@ -57,17 +69,13 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
         {
 
         }
-        internal static void CheckForEntities(Grid _MainGrid, Grid Entity_Container, int _WaveNum)
+        internal static void CheckForEntities()
         {
-            bool ContainsEntity = entities.Count == 0;
-            if (EntityWave.index != _WaveNum && !ContainsEntity)
-            {
-                return;
-            }
-            else if (EntityWave.index == _WaveNum && ContainsEntity)
+            if (EntitiesLeft == 0 && !_WaveModel.GameEnded)
             {
                 WaveClearHandling.WaveCleared();
-            }
+            } 
+              //MessageBox.Show($"Entities remain: {EntitiesRemain.ToString()} Index: {_WaveModel.SpawnIndex} WaveMax: {Entity_Wave_Amount}");
         }
     }
 }

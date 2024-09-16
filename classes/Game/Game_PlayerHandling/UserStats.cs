@@ -15,6 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Space_Shooters.Models;
 using Space_Shooters.Context;
 using Space_Shooters.classes.Game.Game_VariableHandling;
+using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
+using Space_Shooters.classes.Game.Game_DataHandling;
 
 namespace Space_Shooters.classes.Game.Game_PlayerHandling
 {
@@ -48,8 +51,31 @@ namespace Space_Shooters.classes.Game.Game_PlayerHandling
                 userGameStatsClass.HitShots = userGameStats.HitShots;
                 userGameStatsClass.AverageAccuracy = userGameStats.AverageAccuracy;
             }
-            PassableVariables.userStat = userStatsClass;
-            PassableVariables.userGameStat = userGameStatsClass;
+            _UserModel = new()
+            {
+                UserStat = userStatsClass,
+                UserGameStat = userGameStatsClass
+            };
+        }
+        public static void UpdateGameStats(int userId)
+        {
+            using var context = new GameContext();
+            
+            // Read
+            var userGameStats = context.UserGameStats.FirstOrDefault(ugs => ugs.UserId == userId);
+
+            // Update
+            userGameStats.Kills = _UserModel.UserGameStat.Kills;
+            userGameStats.Deaths = _UserModel.UserGameStat.Deaths;
+            userGameStats.DamageDone = _UserModel.UserGameStat.DamageDone;
+            userGameStats.MissedShots = _UserModel.UserGameStat.MissedShots;
+            userGameStats.HitShots = _UserModel.UserGameStat.HitShots;
+            userGameStats.AverageAccuracy = Convert.ToInt32(AverageCalculator.AverageCalculation(userGameStats.HitShots, userGameStats.MissedShots));
+            if (userGameStats.WavePr < Wave)
+            {
+                userGameStats.WavePr = Wave;
+            }
+            context.SaveChanges();
         }
     }
 }

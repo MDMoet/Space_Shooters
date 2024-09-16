@@ -20,6 +20,7 @@ using System.Windows.Threading;
 using static Space_Shooters.classes.UserKeyBinds;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
 using static Space_Shooters.classes.Game.Game_PlayerHandling.User;
+using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using Space_Shooters.classes.Game.Game_EntityHandling;
 using Space_Shooters.classes.Game.Game_CollisionHandling;
@@ -35,43 +36,40 @@ namespace Space_Shooters.views
     /// </summary>
     public partial class Game : UserControl
     {
-        private static OutlinedTextControl CenterBlock = new();
+        private static ViewHandler StatVarViewHandler = new();
+
         private readonly ViewHandler VarViewHandler;
 
-        public Game(ViewHandler VarViewHandler)
+        public Game(ViewHandler PassedViewHandler)
         {
             InitializeComponent();
+            VariableInitialize();
+            // Get the stats from the database
+            GetStatsFromDB(1);
+            GetDataFromDB(1);
             // Set the view in the ViewHandler to this view
-            this.VarViewHandler = VarViewHandler;
+            this.VarViewHandler = PassedViewHandler;
+            StatVarViewHandler = PassedViewHandler;
             // Create a new instance of the StartingTimer class
             StartingTimer timer = new();
-            // Subscribe to the CountdownCompleted event
-            timer.CountdownCompleted += Timer_CountdownCompleted;
             // Set the datacontext of the textblock to the timer (Time in StartingTimer class)
             tbCenterText.DataContext = timer;
-            // Set the CenterBlock to the OutlinedTextControl
-            CenterBlock = tbCenterText;
             // Create a new instance of the GameViewModel class
             GameViewModel gameViewModel = new();
             // Set the datacontext of the textblock to the waveCounter (Wave in WaveNumber class)
             tbWaveNum.DataContext = gameViewModel;
-            // Create a new instance of the CollisionLoop class
-            CollisionLoop collisionLoop = new(MainGrid);
             // Start the collision loop
-            collisionLoop.Start();
-
-            Paused = false;
+            CollisionLoop.Start();
+            // Start the game loop
             Tick();
-            GetDataFromDB();
-            GetStatsFromDB(1);
-
             // Set the datacontext of the progressbar to the hpAmount (PlayerHP in PlayerHPHandler class)
             PlayerHPHandler playerHPHandler = new();
+            // Set the datacontext of the progressbar to the hpAmount (PlayerHP in PlayerHPHandler class)
             pbUserHealth.DataContext = playerHPHandler;
+            // Set the maximum value of the progressbar to the player's max health
             pbUserHealth.Maximum = PlayerHPHandler.PlayerHP;
         }
-
-        private async void Timer_CountdownCompleted(object? sender, EventArgs e)
+        internal static async void StartCountDownCompleted()
         {
             while (true)
             {
@@ -82,52 +80,70 @@ namespace Space_Shooters.views
                     // Skip the rest of the loop but don't break it
                     continue;
                 }
+                if (_WaveModel.GameEnded)
+                {
+                    break;
+                }
                 // Clear the binding to avoid an error when setting the text
-                BindingOperations.ClearBinding(tbCenterText, OutlinedTextControl.TextProperty);
+                BindingOperations.ClearBinding(_WindowModel.CenterBlock, OutlinedTextControl.TextProperty);
                 // Set the text to "Start!"
-                tbCenterText.Text = "Start!";
+                CenterTextHandling.UpdateCenterText("Start!");
                 await Wait.WaitInSeconds(1); // Wait for 1 second
-                // Remove the textblock from the grid
-                tbCenterText.Visibility = Visibility.Collapsed;
-                WaveNumberHandling waveController = new ();
-                waveController.StartWave();
+                _WindowModel.CenterBlock.Visibility = Visibility.Collapsed;
+
+                if (!_WaveModel.WaveStarted && !_WaveModel.GameEnded)
+                {
+                    EntityWave.InitiateSpawn.StartSpawning();
+                }
                 break;
             }
         }
+        private void VariableInitialize()
+        {
+            //_time = 3;
+            WaveNumber.Wave = 1;
+            Paused = false;
 
-        public static void SetCenterText(object text)
-        {
-            if (CenterBlock != null)
+            if (_WindowModel != null && _WaveModel != null)
             {
-                CenterBlock.Visibility = Visibility.Visible;
-                CenterBlock.Text = text?.ToString() ?? string.Empty;
+                _WindowModel.MainGrid = MainGrid;
+                _WindowModel.BoPause = boPauseGame;
+                _WindowModel.BoUser = boUserHitBox;
+                _WindowModel.CenterBlock = tbCenterText;
+
+                _WaveModel.SpawnIndex = 0;
+                _WaveModel.WaveMin = 1;
+                _WaveModel.WaveMax = 3;
+                _WaveModel.WaveStarted = false;
+                _WaveModel.GameEnded = false;
             }
-        }
-        public static void InvisCenterText()
-        {
-            CenterBlock.Visibility = Visibility.Collapsed;
-        }
-        private void ExitToDesktop(object sender, RoutedEventArgs e)
-        {
-            // Close the application
-            System.Windows.Application.Current.Shutdown();
+            else
+            {
+                _WindowModel = new()
+                {
+                    MainGrid = MainGrid,
+                    BoPause = boPauseGame,
+                    BoUser = boUserHitBox,
+                    CenterBlock = tbCenterText
+                };
+                _WaveModel = new()
+                {
+                    SpawnIndex = 0,
+                    WaveMin = 1,
+                    WaveMax = 3,
+                    WaveStarted = false,
+                    GameEnded = false
+                };
+            }
         }
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            // Get the window
-            var window = Window.GetWindow(this);
             // Subscribe to the KeyDown event
-            GameKeyDown._grMainGrid = MainGrid;
-
-            GameKeyDown keyDown = new()
+            if (!KeyDownSubscribed)
             {
-                // Set the pause menu to the border variable in the GameKeyDown class
-                _boPause = boPauseGame,
-                // Set the user to the border variable in the GameKeyDown class
-                _boUser = boUserHitBox
-            };
-            // Subscribe to the KeyDown event
-            window.KeyDown += keyDown.KeyPressed;
+                Window.GetWindow(this).KeyDown += GameKeyDown.KeyPressed;
+                KeyDownSubscribed = true;
+            }
         }
         public void ContinueGame(object sender, RoutedEventArgs e)
         {
@@ -135,5 +151,28 @@ namespace Space_Shooters.views
             boPauseGame.Visibility = Visibility.Collapsed;
             Paused = false;
         }
+
+        private void GiveUp(object sender, RoutedEventArgs e)
+        {
+            GameOver();
+        }
+        private void ExitToDesktop(object sender, RoutedEventArgs e)
+        {
+            UpdateGameStats(1);
+            // Close the application
+            Application.Current.Shutdown();
+        }
+        internal static async void GameOver()
+        {
+            UpdateGameStats(1);
+            _WaveModel.GameEnded = true;
+            Paused = true;
+            _WindowModel.BoPause.Visibility = Visibility.Collapsed;
+            CenterTextHandling.UpdateCenterText("You Lost!");
+            // Wait for 3 seconds
+            await Task.Delay(3 * 1000);
+            StatVarViewHandler.GoToGameMenu();
+        }
+
     }
 }

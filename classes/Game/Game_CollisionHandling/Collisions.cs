@@ -7,96 +7,99 @@ using System.Windows.Controls;
 using static Space_Shooters.classes.Game.Game_PlayerHandling.UserActions;
 using static Space_Shooters.classes.Game.Game_EntityHandling.EntitySpawning;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using System.Windows;
 using System.Reflection;
 using Space_Shooters.classes.Game.Game_EntityHandling;
 using Space_Shooters.Models;
+using Space_Shooters.classes.Game.Game_VariableHandling;
 
 namespace Space_Shooters.classes.Game.Game_CollisionHandling
 {
     public class Collisions
     {
-        internal static void CheckCollision(Grid mainGrid)
+        internal static void CheckCollision()
         {
             var bulletsToRemove = new List<Border>();
             var entitiesToRemove = new List<Grid>();
 
-            foreach (var bullet in bullets.ToList())
+            foreach (var bullet in BulletsList.ToList())
             {
-                foreach (var enemy in entities.ToList())
+                foreach (var enemy in EntitiesList.ToList())
                 {
-                    if (IsColliding(mainGrid, bullet, enemy))
+                    if (IsColliding(bullet, enemy))
                     {
-                        HandleCollision(mainGrid, bullet, enemy, bulletsToRemove, entitiesToRemove);
+                        HandleCollision(bullet, enemy, bulletsToRemove, entitiesToRemove);
                     }
                 }
             }
-
             // Remove bullets and entities after iteration
            
-            EntityRemoval(entitiesToRemove, mainGrid);
-            BulletRemoval(bulletsToRemove, mainGrid);
+            EntityRemoval(entitiesToRemove);
+            BulletRemoval(bulletsToRemove);
 
         }
-        internal static void EntityRemoval(List<Grid> entitiesToRemove, Grid mainGrid)
+        internal static void EntityRemoval(List<Grid> entitiesToRemove)
         {
             foreach (var entity in entitiesToRemove)
             {
-                if (mainGrid.Children.Contains(entity))
+                if (_WindowModel.MainGrid.Children.Contains(entity))
                 {
-                    mainGrid.Children.Remove(entity);
-                    entities.Remove(entity);
+                    _WindowModel.MainGrid.Children.Remove(entity);
+                    EntitiesLeft--;
+                    EntitiesList.Remove(entity);
+                    _UserModel.UserGameStat.Kills++;
+                    WaveCheck.CheckForEntities();
+
                 }
             }
         }
-        internal static void BulletRemoval(List<Border> bulletsToRemove, Grid mainGrid)
+        internal static void BulletRemoval(List<Border> bulletsToRemove)
         {
-            UserGameStat userGameStat = new();
             foreach (var bullet in bulletsToRemove)
             {
-                if (mainGrid.Children.Contains(bullet))
+                if (_WindowModel.MainGrid.Children.Contains(bullet))
                 {
-                    mainGrid.Children.Remove(bullet);
-                    bullets.Remove(bullet);
-                    userGameStat.HitShots++;
+                    _WindowModel.MainGrid.Children.Remove(bullet);
+                    BulletsList.Remove(bullet);
+                    _UserModel.UserGameStat.HitShots++;
                 }
             }
         }
 
-        private static bool IsColliding(Grid mainGrid, Border bullet, Grid enemy)
+        private static bool IsColliding(Border bullet, Grid enemy)
         {
             // Ensure the bullet and enemy are part of the visual tree
-            if (!mainGrid.Children.Contains(bullet) || !mainGrid.Children.Contains(enemy))
+            if (!_WindowModel.MainGrid.Children.Contains(bullet) || !_WindowModel.MainGrid.Children.Contains(enemy))
             {
                 return false;
             }
 
             // Get the absolute position of the bullet
-            var bulletTransform = bullet.TransformToAncestor(mainGrid);
+            var bulletTransform = bullet.TransformToAncestor(_WindowModel.MainGrid);
             var bulletPosition = bulletTransform.Transform(new Point(0, 0));
             Rect rect = new(bulletPosition.X, bulletPosition.Y, bullet.Width, bullet.Height);
             Rect bulletRect = rect;
 
             // Get the absolute position of the enemy
-            var enemyTransform = enemy.TransformToAncestor(mainGrid);
+            var enemyTransform = enemy.TransformToAncestor(_WindowModel.MainGrid);
             var enemyPosition = enemyTransform.Transform(new Point(0, 0));
             Rect enemyRect = new(enemyPosition.X, enemyPosition.Y, enemy.Width, enemy.Height);
 
             return bulletRect.IntersectsWith(enemyRect);
         }
 
-        private static void HandleCollision(Grid mainGrid, Border bullet, Grid entity, List<Border> bulletsToRemove, List<Grid> entitiesToRemove)
+        private static void HandleCollision(Border bullet, Grid entity, List<Border> bulletsToRemove, List<Grid> entitiesToRemove)
         {
             foreach (ProgressBar health in entity.Children.OfType<ProgressBar>())
             {
-                health.Value -= int.Parse(bullet.Tag.ToString());
-                userGameStat.DamageDone += int.Parse(bullet.Tag.ToString());
+                health.Value -= Convert.ToInt32(bullet.Tag);
+               
+                _UserModel.UserGameStat.DamageDone += Convert.ToInt32(bullet.Tag);
                 if (health.Value <= 0)
                 {
                     entitiesToRemove.Add(entity);
-                    EntityRemoval(entitiesToRemove, mainGrid);
-                    userGameStat.Kills++;
-                    WaveCheck.CheckForEntities(mainGrid, entity, EntityWave.entityWaveAmount);
+                    EntityRemoval(entitiesToRemove);
                 }
             }
             bulletsToRemove.Add(bullet);

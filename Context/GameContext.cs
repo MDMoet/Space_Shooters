@@ -53,11 +53,9 @@ public partial class GameContext : DbContext
 
     public virtual DbSet<UsersShop> UsersShops { get; set; }
 
-    public virtual DbSet<WaveInformation> WaveInformations { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=127.0.0.1;database=space_shooters;uid=root", Microsoft.EntityFrameworkCore.ServerVersion.Parse("10.4.32-mariadb"));
+        => optionsBuilder.UseMySql("server=127.0.0.1;database=space_shooters;uid=root;sslmode=none", ServerVersion.Parse("10.4.32-mariadb"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -69,116 +67,362 @@ public partial class GameContext : DbContext
         {
             entity.HasKey(e => e.KeybindId).HasName("PRIMARY");
 
-            entity.Property(e => e.KeybindId).ValueGeneratedNever();
+            entity.ToTable("default_keybinds");
 
-            entity.HasOne(d => d.Keybind).WithOne(p => p.DefaultKeybind).HasConstraintName("default_keybinds_keybind_id");
+            entity.Property(e => e.KeybindId)
+                .ValueGeneratedNever()
+                .HasColumnType("int(11)")
+                .HasColumnName("keybind_id");
+
+            entity.HasOne(d => d.Keybind).WithOne(p => p.DefaultKeybind)
+                .HasForeignKey<DefaultKeybind>(d => d.KeybindId)
+                .HasConstraintName("default_keybinds_keybind_id");
         });
 
         modelBuilder.Entity<Entity>(entity =>
         {
             entity.HasKey(e => e.EntityId).HasName("PRIMARY");
+
+            entity.ToTable("entities");
+
+            entity.Property(e => e.EntityId)
+                .HasColumnType("int(11)")
+                .HasColumnName("entity_id");
+            entity.Property(e => e.Name)
+                .HasMaxLength(128)
+                .HasColumnName("name");
+            entity.Property(e => e.SpawnWave)
+                .HasColumnType("int(11)")
+                .HasColumnName("spawn_wave");
         });
 
         modelBuilder.Entity<EntityEquipment>(entity =>
         {
-            entity.HasOne(d => d.Entity).WithMany().HasConstraintName("equip_entities_entityid");
+            entity
+                .HasNoKey()
+                .ToTable("entity_equipment");
 
-            entity.HasOne(d => d.Item).WithMany().HasConstraintName("equip_items_itemid");
+            entity.HasIndex(e => e.EntityId, "entity_id").IsUnique();
+
+            entity.HasIndex(e => e.ItemId, "equip_items_itemid");
+
+            entity.Property(e => e.EntityId)
+                .HasColumnType("int(11)")
+                .HasColumnName("entity_id");
+            entity.Property(e => e.ItemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("item_id");
+
+            entity.HasOne(d => d.Entity).WithOne()
+                .HasForeignKey<EntityEquipment>(d => d.EntityId)
+                .HasConstraintName("equip_entities_entityid");
+
+            entity.HasOne(d => d.Item).WithMany()
+                .HasForeignKey(d => d.ItemId)
+                .HasConstraintName("equip_items_itemid");
         });
 
         modelBuilder.Entity<EntitySkin>(entity =>
         {
             entity.HasKey(e => e.EntityId).HasName("PRIMARY");
 
-            entity.Property(e => e.EntityId).ValueGeneratedNever();
-            entity.Property(e => e.Skin).HasDefaultValueSql("'Entity_Default'");
+            entity.ToTable("entity_skin");
 
-            entity.HasOne(d => d.Entity).WithOne(p => p.EntitySkin).HasConstraintName("skin_entities_entityid");
+            entity.Property(e => e.EntityId)
+                .ValueGeneratedNever()
+                .HasColumnType("int(11)")
+                .HasColumnName("entity_id");
+            entity.Property(e => e.Skin)
+                .HasMaxLength(128)
+                .HasDefaultValueSql("'Entity_Default'")
+                .HasColumnName("skin");
+
+            entity.HasOne(d => d.Entity).WithOne(p => p.EntitySkin)
+                .HasForeignKey<EntitySkin>(d => d.EntityId)
+                .HasConstraintName("skin_entities_entityid");
         });
 
         modelBuilder.Entity<EntityStat>(entity =>
         {
             entity.HasKey(e => e.EntityId).HasName("PRIMARY");
 
-            entity.Property(e => e.EntityId).ValueGeneratedNever();
-            entity.Property(e => e.BaseAttackSpeed).HasDefaultValueSql("'1000'");
-            entity.Property(e => e.BaseDamage).HasDefaultValueSql("'1'");
-            entity.Property(e => e.BaseSpeed).HasDefaultValueSql("'25'");
-            entity.Property(e => e.BeginSpawnWave).HasDefaultValueSql("'1'");
-            entity.Property(e => e.Health).HasDefaultValueSql("'100'");
-            entity.Property(e => e.MaxLevel).HasDefaultValueSql("'1'");
-            entity.Property(e => e.MinLevel).HasDefaultValueSql("'1'");
+            entity.ToTable("entity_stats");
 
-            entity.HasOne(d => d.Entity).WithOne(p => p.EntityStat).HasConstraintName("stats_entities_entityid");
+            entity.HasIndex(e => e.EntityId, "entity_id").IsUnique();
+
+            entity.Property(e => e.EntityId)
+                .ValueGeneratedNever()
+                .HasColumnType("int(11)")
+                .HasColumnName("entity_id");
+            entity.Property(e => e.BaseAttackSpeed)
+                .HasDefaultValueSql("'1000'")
+                .HasColumnType("int(11)")
+                .HasColumnName("base_attack_speed");
+            entity.Property(e => e.BaseDamage)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("base_damage");
+            entity.Property(e => e.BaseSpeed)
+                .HasDefaultValueSql("'25'")
+                .HasColumnType("int(11)")
+                .HasColumnName("base_speed");
+            entity.Property(e => e.Health)
+                .HasDefaultValueSql("'100'")
+                .HasColumnType("int(11)")
+                .HasColumnName("health");
+            entity.Property(e => e.MaxLevel)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("max_level");
+            entity.Property(e => e.MinLevel)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("min_level");
+
+            entity.HasOne(d => d.Entity).WithOne(p => p.EntityStat)
+                .HasForeignKey<EntityStat>(d => d.EntityId)
+                .HasConstraintName("stats_entities_entityid");
         });
 
         modelBuilder.Entity<Item>(entity =>
         {
             entity.HasKey(e => e.ItemId).HasName("PRIMARY");
 
-            entity.Property(e => e.RequiredLevel).HasDefaultValueSql("'1'");
-            entity.Property(e => e.Worth).HasDefaultValueSql("'1'");
+            entity.ToTable("items");
+
+            entity.Property(e => e.ItemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("item_id");
+            entity.Property(e => e.ItemType)
+                .HasMaxLength(128)
+                .HasColumnName("item_type");
+            entity.Property(e => e.Name)
+                .HasMaxLength(256)
+                .HasColumnName("name");
+            entity.Property(e => e.RequiredLevel)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(128)")
+                .HasColumnName("required_level");
+            entity.Property(e => e.Skin)
+                .HasMaxLength(128)
+                .HasColumnName("skin");
+            entity.Property(e => e.Worth)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("worth");
         });
 
         modelBuilder.Entity<ItemStat>(entity =>
         {
             entity.HasKey(e => e.ItemId).HasName("PRIMARY");
 
-            entity.Property(e => e.ItemId).ValueGeneratedNever();
-            entity.Property(e => e.AttackSpeed).HasDefaultValueSql("'1'");
-            entity.Property(e => e.Durability).HasDefaultValueSql("'1'");
-            entity.Property(e => e.Level).HasDefaultValueSql("'1'");
+            entity.ToTable("item_stats");
 
-            entity.HasOne(d => d.Item).WithOne(p => p.ItemStat).HasConstraintName("stats_items_itemid");
+            entity.Property(e => e.ItemId)
+                .ValueGeneratedNever()
+                .HasColumnType("int(11)")
+                .HasColumnName("item_id");
+            entity.Property(e => e.AttackSpeed)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(64)")
+                .HasColumnName("attack_speed");
+            entity.Property(e => e.Damage)
+                .HasColumnType("int(64)")
+                .HasColumnName("damage");
+            entity.Property(e => e.Durability)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(64)")
+                .HasColumnName("durability");
+            entity.Property(e => e.Healing)
+                .HasColumnType("int(64)")
+                .HasColumnName("healing");
+            entity.Property(e => e.Level)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("level");
+
+            entity.HasOne(d => d.Item).WithOne(p => p.ItemStat)
+                .HasForeignKey<ItemStat>(d => d.ItemId)
+                .HasConstraintName("stats_items_itemid");
         });
 
         modelBuilder.Entity<Itemshop>(entity =>
         {
             entity.HasKey(e => e.ShopitemId).HasName("PRIMARY");
 
-            entity.HasOne(d => d.Item).WithMany(p => p.Itemshops).HasConstraintName("itemshop_item_id");
+            entity.ToTable("itemshop");
+
+            entity.HasIndex(e => e.ItemId, "itemshop_item_id");
+
+            entity.Property(e => e.ShopitemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("shopitem_id");
+            entity.Property(e => e.ItemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("item_id");
+            entity.Property(e => e.Worth)
+                .HasColumnType("int(11)")
+                .HasColumnName("worth");
+
+            entity.HasOne(d => d.Item).WithMany(p => p.Itemshops)
+                .HasForeignKey(d => d.ItemId)
+                .HasConstraintName("itemshop_item_id");
         });
 
         modelBuilder.Entity<KeybindEnum>(entity =>
         {
             entity.HasKey(e => e.KeybindId).HasName("PRIMARY");
+
+            entity.ToTable("keybind_enums");
+
+            entity.HasIndex(e => new { e.Keybind, e.KeybindEnum1 }, "keybind");
+
+            entity.Property(e => e.KeybindId)
+                .HasColumnType("int(11)")
+                .HasColumnName("keybind_id");
+            entity.Property(e => e.Keybind)
+                .HasMaxLength(128)
+                .HasColumnName("keybind");
+            entity.Property(e => e.KeybindEnum1)
+                .HasColumnType("int(11)")
+                .HasColumnName("keybind_enum");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PRIMARY");
+
+            entity.ToTable("users");
+
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+            entity.Property(e => e.Admin)
+                .HasColumnType("tinyint(4)")
+                .HasColumnName("admin");
+            entity.Property(e => e.Email)
+                .HasMaxLength(128)
+                .HasColumnName("email");
+            entity.Property(e => e.Password)
+                .HasMaxLength(128)
+                .HasColumnName("password");
+            entity.Property(e => e.Username)
+                .HasMaxLength(128)
+                .HasColumnName("username");
         });
 
         modelBuilder.Entity<UserAction>(entity =>
         {
             entity.HasKey(e => e.ActionId).HasName("PRIMARY");
+
+            entity.ToTable("user_actions");
+
+            entity.Property(e => e.ActionId)
+                .HasColumnType("int(11)")
+                .HasColumnName("action_id");
+            entity.Property(e => e.Action)
+                .HasMaxLength(128)
+                .HasColumnName("action");
         });
 
         modelBuilder.Entity<UserEquipment>(entity =>
         {
+            entity
+                .HasNoKey()
+                .ToTable("user_equipment");
+
+            entity.HasIndex(e => e.ItemId, "items_equip_itemid");
+
+            entity.HasIndex(e => e.UserId, "users_equip_userid");
+
+            entity.Property(e => e.ItemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("item_id");
+            entity.Property(e => e.Itemslot)
+                .HasColumnType("int(11)")
+                .HasColumnName("itemslot");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+
             entity.HasOne(d => d.Item).WithMany()
+                .HasForeignKey(d => d.ItemId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("items_equip_itemid");
 
-            entity.HasOne(d => d.User).WithMany().HasConstraintName("users_equip_userid");
+            entity.HasOne(d => d.User).WithMany()
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("users_equip_userid");
         });
 
         modelBuilder.Entity<UserGameStat>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PRIMARY");
 
-            entity.Property(e => e.UserId).ValueGeneratedNever();
+            entity.ToTable("user_game_stats");
 
-            entity.HasOne(d => d.User).WithOne(p => p.UserGameStat).HasConstraintName("game_stats_user_id");
+            entity.Property(e => e.UserId)
+                .ValueGeneratedNever()
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+            entity.Property(e => e.AverageAccuracy)
+                .HasColumnType("int(11)")
+                .HasColumnName("average_accuracy");
+            entity.Property(e => e.DamageDone)
+                .HasColumnType("int(11)")
+                .HasColumnName("damage_done");
+            entity.Property(e => e.Deaths)
+                .HasColumnType("int(11)")
+                .HasColumnName("deaths");
+            entity.Property(e => e.HitShots)
+                .HasColumnType("int(11)")
+                .HasColumnName("hit_shots");
+            entity.Property(e => e.Kills)
+                .HasColumnType("int(11)")
+                .HasColumnName("kills");
+            entity.Property(e => e.MissedShots)
+                .HasColumnType("int(11)")
+                .HasColumnName("missed_shots");
+            entity.Property(e => e.WavePr)
+                .HasColumnType("int(11)")
+                .HasColumnName("wave_pr");
+
+            entity.HasOne(d => d.User).WithOne(p => p.UserGameStat)
+                .HasForeignKey<UserGameStat>(d => d.UserId)
+                .HasConstraintName("game_stats_user_id");
         });
 
         modelBuilder.Entity<UserInventory>(entity =>
         {
-            entity.Property(e => e.Level).HasDefaultValueSql("'1'");
+            entity
+                .HasNoKey()
+                .ToTable("user_inventory");
 
-            entity.HasOne(d => d.Item).WithMany().HasConstraintName("inv_items_itemid");
+            entity.HasIndex(e => e.ItemId, "inv_items_itemid");
 
-            entity.HasOne(d => d.User).WithMany().HasConstraintName("inv_users_userid");
+            entity.HasIndex(e => e.UserId, "inv_users_userid");
+
+            entity.Property(e => e.Amount)
+                .HasColumnType("int(11)")
+                .HasColumnName("amount");
+            entity.Property(e => e.ItemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("item_id");
+            entity.Property(e => e.Level)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("level");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+
+            entity.HasOne(d => d.Item).WithMany()
+                .HasForeignKey(d => d.ItemId)
+                .HasConstraintName("inv_items_itemid");
+
+            entity.HasOne(d => d.User).WithMany()
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("inv_users_userid");
         });
 
         modelBuilder.Entity<UserKeybind>(entity =>
@@ -187,43 +431,122 @@ public partial class GameContext : DbContext
                 .HasName("PRIMARY")
                 .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0, 0 });
 
-            entity.HasOne(d => d.Action).WithMany(p => p.UserKeybinds).HasConstraintName("keybinds_action_id");
+            entity.ToTable("user_keybinds");
 
-            entity.HasOne(d => d.Keybind).WithMany(p => p.UserKeybinds).HasConstraintName("keybinds_keybind_id");
+            entity.HasIndex(e => e.ActionId, "action_id");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserKeybinds).HasConstraintName("keybinds_user_id");
+            entity.HasIndex(e => e.KeybindId, "keybind_id");
+
+            entity.HasIndex(e => e.UserId, "user_id");
+
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+            entity.Property(e => e.KeybindId)
+                .HasColumnType("int(11)")
+                .HasColumnName("keybind_id");
+            entity.Property(e => e.ActionId)
+                .HasColumnType("int(11)")
+                .HasColumnName("action_id");
+
+            entity.HasOne(d => d.Action).WithMany(p => p.UserKeybinds)
+                .HasForeignKey(d => d.ActionId)
+                .HasConstraintName("keybinds_action_id");
+
+            entity.HasOne(d => d.Keybind).WithMany(p => p.UserKeybinds)
+                .HasForeignKey(d => d.KeybindId)
+                .HasConstraintName("keybinds_keybind_id");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserKeybinds)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("keybinds_user_id");
         });
 
         modelBuilder.Entity<UserSkin>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PRIMARY");
 
-            entity.Property(e => e.UserId).ValueGeneratedNever();
-            entity.Property(e => e.Skin).HasDefaultValueSql("'User_Default'");
+            entity.ToTable("user_skin");
 
-            entity.HasOne(d => d.User).WithOne(p => p.UserSkin).HasConstraintName("skin_users_userid");
+            entity.Property(e => e.UserId)
+                .ValueGeneratedNever()
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+            entity.Property(e => e.Skin)
+                .HasMaxLength(128)
+                .HasDefaultValueSql("'User_Default'")
+                .HasColumnName("skin");
+
+            entity.HasOne(d => d.User).WithOne(p => p.UserSkin)
+                .HasForeignKey<UserSkin>(d => d.UserId)
+                .HasConstraintName("skin_users_userid");
         });
 
         modelBuilder.Entity<UserStat>(entity =>
         {
-            entity.Property(e => e.BaseAttackSpeed).HasDefaultValueSql("'1000'");
-            entity.Property(e => e.BaseDamage).HasDefaultValueSql("'1'");
-            entity.Property(e => e.Health).HasDefaultValueSql("'100'");
-            entity.Property(e => e.Level).HasDefaultValueSql("'1'");
+            entity
+                .HasNoKey()
+                .ToTable("user_stats");
 
-            entity.HasOne(d => d.User).WithOne().HasConstraintName("stats_users_userid");
+            entity.HasIndex(e => e.UserId, "user_id").IsUnique();
+
+            entity.Property(e => e.BaseAttackSpeed)
+                .HasDefaultValueSql("'1000'")
+                .HasColumnType("int(11)")
+                .HasColumnName("base_attack_speed");
+            entity.Property(e => e.BaseDamage)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("base_damage");
+            entity.Property(e => e.Health)
+                .HasDefaultValueSql("'100'")
+                .HasColumnType("int(128)")
+                .HasColumnName("health");
+            entity.Property(e => e.Level)
+                .HasDefaultValueSql("'1'")
+                .HasColumnType("int(11)")
+                .HasColumnName("level");
+            entity.Property(e => e.LevelPoints)
+                .HasColumnType("int(11)")
+                .HasColumnName("level_points");
+            entity.Property(e => e.LevelProgression)
+                .HasColumnType("int(11)")
+                .HasColumnName("level_progression");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+
+            entity.HasOne(d => d.User).WithOne()
+                .HasForeignKey<UserStat>(d => d.UserId)
+                .HasConstraintName("stats_users_userid");
         });
 
         modelBuilder.Entity<UsersShop>(entity =>
         {
             entity.HasKey(e => e.UsersShopitemId).HasName("PRIMARY");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UsersShops).HasConstraintName("shop_user_id");
-        });
+            entity.ToTable("users_shop");
 
-        modelBuilder.Entity<WaveInformation>(entity =>
-        {
-            entity.HasKey(e => e.WaveId).HasName("PRIMARY");
+            entity.HasIndex(e => e.UserId, "shop_user_id");
+
+            entity.HasIndex(e => e.UserItemId, "shop_user_item_id");
+
+            entity.Property(e => e.UsersShopitemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("users_shopitem_id");
+            entity.Property(e => e.UserId)
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
+            entity.Property(e => e.UserItemId)
+                .HasColumnType("int(11)")
+                .HasColumnName("user_item_id");
+            entity.Property(e => e.Worth)
+                .HasColumnType("int(11)")
+                .HasColumnName("worth");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UsersShops)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("shop_user_id");
         });
 
         OnModelCreatingPartial(modelBuilder);
