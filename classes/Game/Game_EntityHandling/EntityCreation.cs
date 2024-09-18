@@ -10,9 +10,11 @@ using System.Windows.Media;
 using Space_Shooters.views;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using Space_Shooters.classes.Game.Game_DataHandling;
 using Space_Shooters.Context;
 using Space_Shooters.Models;
+using System.Security.Cryptography;
 
 namespace Space_Shooters.classes.Game.Game_EntityHandling
 {
@@ -25,7 +27,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             EntitySkin EntitySkinClass_ = new();
             EntityStat EntityStatsClass_ = new();
             EntityEquipment EntityEquipmentClass_ = new();
-            using var context = new GameContext();
+            using var context = new Context.GameContext();
             // Assuming you have a primary key 'Id' in your UserStats table
             var Entity_ = context.Entities.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
             if (Entity_ != null)
@@ -47,11 +49,8 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                 EntityStatsClass_.BaseSpeed = EntityStats_.BaseSpeed;
                 EntityStatsClass_.BaseAttackSpeed = EntityStats_.BaseAttackSpeed;
             }
-            //var EntityEquipment_ = context.EntityEquipments.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
-            //if (EntityEquipment_ != null)
-            //{
-
-            //}
+            var EntityEquipment_ = context.EntityEquipments.Where(e => e.EntityId == EntityId_).Select(e => e.ItemId).ToArray();
+                _ItemModel.ItemArray = EntityEquipment_;
             if (_EntityModel != null)
             {
                 _EntityModel.Entity = EntityClass_;
@@ -74,7 +73,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             int[] ia;
             int ei_;
             Random random = new();
-            using var context = new GameContext();
+            using var context = new Context.GameContext();
             // Query the database to get entities that spawn in the current wave
             var e_ = context.Entities
                                   .Where(e => e.SpawnWave <= Wave)

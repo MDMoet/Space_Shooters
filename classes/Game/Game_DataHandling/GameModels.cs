@@ -24,6 +24,7 @@ namespace Space_Shooters.classes.Game.Game_DataHandling
         internal Border BoPause { get; set; }
         internal Border BoUser { get; set; }
         internal OutlinedTextControl CenterBlock { get; set; }
+        internal StackPanel ItemLog { get; set; }
     }
     internal class UserModel
     {
@@ -31,7 +32,11 @@ namespace Space_Shooters.classes.Game.Game_DataHandling
         internal UserGameStat UserGameStat { get; set; }
 
     }
-
+    internal class ItemModel
+    {
+        internal int[] ItemArray { get; set; }
+    }
+   
     internal class EntityModel
     {
         internal Entity Entity { get; set; }

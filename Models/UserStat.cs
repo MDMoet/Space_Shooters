@@ -17,6 +17,8 @@ public partial class UserStat
 
     public int BaseDamage { get; set; }
 
+    public int BaseSpeed { get; set; }
+
     public int BaseAttackSpeed { get; set; }
 
     public virtual User User { get; set; } = null!;

@@ -19,6 +19,7 @@ using Space_Shooters.views;
 using Space_Shooters.Models;
 using static Google.Protobuf.WellKnownTypes.Field.Types;
 using Space_Shooters.classes.Game.Game_PlayerHandling;
+using Space_Shooters.classes.Game.Game_VariableHandling;
 
 namespace Space_Shooters.classes.Game.Game_EntityHandling
 {
@@ -77,11 +78,13 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
         public static void SpawnEntityConfiguration()
         {
             int sizeIncrease = 5 * _Enemy.Level;
-            int lifeIncrease = 7 * _Enemy.Level;
+            int lifeIncrease = 6 * _Enemy.Level;
             if (_Enemy.Level < 5)
             {
-                lifeIncrease -= 7 * _Enemy.Level;
+                lifeIncrease -= 11 * _Enemy.Level;
             }
+
+            lifeIncrease = DifficultyHandling.LifeIncrease(lifeIncrease);
 
             Random random = new();
             int ranNum = random.Next(-728, 718);
@@ -91,7 +94,9 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                 Width = 31 + sizeIncrease,
                 Height = 31 + sizeIncrease,
                 Background = System.Windows.Media.Brushes.Transparent,
-                Margin = new Thickness(ranNum, 0, 0, 430)
+                Margin = new Thickness(ranNum, 0, 0, 430),
+                Tag = $"{_Enemy.Level}"
+
             };
 
             Border Entity_HitBox = new()

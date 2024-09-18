@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
-using static Space_Shooters.classes.Game.Game_PlayerHandling.User;
+using static Space_Shooters.classes.Game.Game_DataHandling.User;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
@@ -39,7 +39,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                 if (!_WaveModel.GameEnded) CenterTextHandling.UpdateCenterText($"Wave Cleared!");
                 else break;// Increase the wave number
                 IncreaseWave();
-                UpdateGameStats(1);
+                UpdateDatabase();
                 // Wait for 2 seconds
                 if (!_WaveModel.GameEnded) await Wait.WaitInSeconds(2);
                 else break;
@@ -75,7 +75,6 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             {
                 WaveClearHandling.WaveCleared();
             } 
-              //MessageBox.Show($"Entities remain: {EntitiesRemain.ToString()} Index: {_WaveModel.SpawnIndex} WaveMax: {Entity_Wave_Amount}");
         }
     }
 }

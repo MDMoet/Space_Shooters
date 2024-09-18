@@ -20,7 +20,14 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-
+            <!-- User logs -->
+            <StackPanel x:Name="spItemLog" Width="100" Height="175" Opacity="0.4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,7,0,0">
+                
+            </StackPanel>
+            
+            <!-- Wave counter-->
+            <local:OutlinedTextControl x:Name="tbWaveCounter" Width="100" Height="50" FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="{Binding Wave, Mode=OneWay}" BorderBrush="Yellow" Opacity="0.5" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0"/>
+            
             <!-- User UI -->
             <Border x:Name="boPauseGame" Width="250" Panel.ZIndex="5" Height="300" BorderBrush="#DFC900" BorderThickness="2" Visibility="Collapsed">
                 <Grid Width="250" Height="300">

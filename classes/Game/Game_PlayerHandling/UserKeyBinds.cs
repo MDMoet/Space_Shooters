@@ -17,12 +17,12 @@ namespace Space_Shooters.classes
         public static Key Attack_2;
         public static Key Attack_3;
 
-        public static void GetDataFromDB(int UserId_)
+        public static void GetDataFromDB()
         {
             using var context = new GameContext();
 
             var keyBinds = context.UserKeybinds
-                .Where(e => e.UserId == UserId_)
+                .Where(e => e.UserId == MainWindow.UserId)
                 .Select(uk => new
                 {
                     KeybindEnum = uk.Keybind.KeybindEnum1,

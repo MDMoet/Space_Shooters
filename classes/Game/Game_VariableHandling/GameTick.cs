@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Space_Shooters.classes.Game.Game_DataHandling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -6,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
+using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 
 namespace Space_Shooters.classes.Game.Game_VariableHandling
 {
@@ -39,11 +41,13 @@ namespace Space_Shooters.classes.Game.Game_VariableHandling
             {
                 if (Paused)
                 {
+                    if (_WaveModel.GameEnded) break;
                     // Wait for 200ms to reduce the CPU usage
                     await Task.Delay(200);
                     // Skip the rest of the loop
                     continue;
                 }
+                if (_WaveModel.GameEnded) break;
                 // Wait for the tickrate
                 await Task.Delay(TickRateMs);
                 // Decrease the time

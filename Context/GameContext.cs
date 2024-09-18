@@ -102,7 +102,7 @@ public partial class GameContext : DbContext
                 .HasNoKey()
                 .ToTable("entity_equipment");
 
-            entity.HasIndex(e => e.EntityId, "entity_id").IsUnique();
+            entity.HasIndex(e => e.EntityId, "entity_id");
 
             entity.HasIndex(e => e.ItemId, "equip_items_itemid");
 
@@ -113,8 +113,8 @@ public partial class GameContext : DbContext
                 .HasColumnType("int(11)")
                 .HasColumnName("item_id");
 
-            entity.HasOne(d => d.Entity).WithOne()
-                .HasForeignKey<EntityEquipment>(d => d.EntityId)
+            entity.HasOne(d => d.Entity).WithMany()
+                .HasForeignKey(d => d.EntityId)
                 .HasConstraintName("equip_entities_entityid");
 
             entity.HasOne(d => d.Item).WithMany()
@@ -400,7 +400,7 @@ public partial class GameContext : DbContext
 
             entity.HasIndex(e => e.ItemId, "inv_items_itemid");
 
-            entity.HasIndex(e => e.UserId, "inv_users_userid");
+            entity.HasIndex(e => e.UserId, "user_id");
 
             entity.Property(e => e.Amount)
                 .HasColumnType("int(11)")
@@ -484,12 +484,16 @@ public partial class GameContext : DbContext
 
         modelBuilder.Entity<UserStat>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("user_stats");
+            entity.HasKey(e => e.UserId).HasName("PRIMARY");
+
+            entity.ToTable("user_stats");
 
             entity.HasIndex(e => e.UserId, "user_id").IsUnique();
 
+            entity.Property(e => e.UserId)
+                .ValueGeneratedNever()
+                .HasColumnType("int(11)")
+                .HasColumnName("user_id");
             entity.Property(e => e.BaseAttackSpeed)
                 .HasDefaultValueSql("'1000'")
                 .HasColumnType("int(11)")
@@ -498,6 +502,10 @@ public partial class GameContext : DbContext
                 .HasDefaultValueSql("'1'")
                 .HasColumnType("int(11)")
                 .HasColumnName("base_damage");
+            entity.Property(e => e.BaseSpeed)
+                .HasDefaultValueSql("'25'")
+                .HasColumnType("int(11)")
+                .HasColumnName("base_speed");
             entity.Property(e => e.Health)
                 .HasDefaultValueSql("'100'")
                 .HasColumnType("int(128)")
@@ -512,11 +520,8 @@ public partial class GameContext : DbContext
             entity.Property(e => e.LevelProgression)
                 .HasColumnType("int(11)")
                 .HasColumnName("level_progression");
-            entity.Property(e => e.UserId)
-                .HasColumnType("int(11)")
-                .HasColumnName("user_id");
 
-            entity.HasOne(d => d.User).WithOne()
+            entity.HasOne(d => d.User).WithOne(p => p.UserStat)
                 .HasForeignKey<UserStat>(d => d.UserId)
                 .HasConstraintName("stats_users_userid");
         });

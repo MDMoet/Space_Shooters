@@ -24,6 +24,7 @@ namespace Space_Shooters
     public partial class MainWindow : Window
     {
         public ViewHandler VarViewHandler { get; set; }
+        internal static int UserId = 1;
         public MainWindow()
         {
             InitializeComponent();

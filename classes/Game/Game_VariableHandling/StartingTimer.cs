@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
 using static Space_Shooters.views.Game;
+using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using Space_Shooters.views;
 
 
@@ -60,6 +61,7 @@ namespace Space_Shooters.classes.Game.Game_VariableHandling
                     // Check if the game is paused
                     if (Paused)
                     {
+                        if (_WaveModel.GameEnded) break;
                         // Wait for 200ms to reduce the CPU usage
                         await Task.Delay(200);
                         // Minus the i to ensure that the loop stays running even while paused
@@ -67,10 +69,12 @@ namespace Space_Shooters.classes.Game.Game_VariableHandling
                         // Skip the rest of the loop and wait for the next tick
                         continue;
                     }
+                    if (_WaveModel.GameEnded) break;
                     // Wait for the tick
                     await Task.Delay(tickMs);
                 }
                 // Wait for 1 second
+                if (_WaveModel.GameEnded) break;
                 Time--; // Decrease the timer
             }
         }

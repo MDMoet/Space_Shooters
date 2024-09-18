@@ -21,5 +21,7 @@ public partial class User
 
     public virtual UserSkin? UserSkin { get; set; }
 
+    public virtual UserStat? UserStat { get; set; }
+
     public virtual ICollection<UsersShop> UsersShops { get; set; } = new List<UsersShop>();
 }

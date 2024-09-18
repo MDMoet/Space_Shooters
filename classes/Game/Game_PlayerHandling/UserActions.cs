@@ -32,12 +32,11 @@ namespace Space_Shooters.classes.Game.Game_PlayerHandling
         // Move method to handles both left and right movement
         private static void Move(Direction direction)
         {
-            int _userMovementSpeed = 25;
             int _leftBoundary = -746;
             int _rightBoundary = 736;
 
             // Calculate the movement based on the direction
-            double movement = direction == Direction.Left ? -_userMovementSpeed : _userMovementSpeed;
+            double movement = direction == Direction.Left ? -_UserModel.UserStat.BaseSpeed : _UserModel.UserStat.BaseSpeed;
             // Calculate the new location based on the current margin
             double newLocation = _WindowModel.BoUser.Margin.Left + movement;
 

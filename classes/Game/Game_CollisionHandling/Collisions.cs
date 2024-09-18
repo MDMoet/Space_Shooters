@@ -13,6 +13,7 @@ using System.Reflection;
 using Space_Shooters.classes.Game.Game_EntityHandling;
 using Space_Shooters.Models;
 using Space_Shooters.classes.Game.Game_VariableHandling;
+using Space_Shooters.classes.Game.Game_DataHandling;
 
 namespace Space_Shooters.classes.Game.Game_CollisionHandling
 {
@@ -100,6 +101,8 @@ namespace Space_Shooters.classes.Game.Game_CollisionHandling
                 {
                     entitiesToRemove.Add(entity);
                     EntityRemoval(entitiesToRemove);
+                    ItemHandling.GetItemData(entity);
+                    LevelHandling.LevelProgression(entity);
                 }
             }
             bulletsToRemove.Add(bullet);
