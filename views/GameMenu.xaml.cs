@@ -1,4 +1,6 @@
 ﻿using Space_Shooters.classes;
+using static Space_Shooters.classes.Game.Game_VariableHandling.DifficultyVariable;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace Space_Shooters.views
 {
     /// <summary>
@@ -21,18 +24,34 @@ namespace Space_Shooters.views
     public partial class GameMenu : UserControl
     {
         private readonly ViewHandler VarViewHandler;
+
+        private static Button btEasyStatic;
+        private static Button btMediumStatic;
+        private static Button btHardStatic;
+        private static Button btExtremeStatic;
+
+        private static bool DifficultySelected;
         public GameMenu(ViewHandler VarViewHandler)
         {
             InitializeComponent();
             this.VarViewHandler = VarViewHandler;
+            
+            btEasyStatic = btEasy;
+            btMediumStatic = btMedium;
+            btHardStatic = btHard;
+            btExtremeStatic = btExtreme;
+
+            imgEquippedSkin.Source = new BitmapImage(new Uri($"..\\img\\skins\\User_Skins\\{_UserModel.Skin}.png", UriKind.RelativeOrAbsolute));
+            DifficultySelected = false;
         }
         public void StartGame(object sender, RoutedEventArgs e)
         {
+            if(!DifficultySelected) return;
             VarViewHandler.GoToGame();
         }
         public void Equipment(object sender, RoutedEventArgs e)
         {
-            VarViewHandler.GoToSkins();
+            VarViewHandler.GoToEquipment();
         }
         public void Skins(object sender, RoutedEventArgs e)
         {
@@ -41,6 +60,41 @@ namespace Space_Shooters.views
         public void Return(object sender, RoutedEventArgs e)
         {
             VarViewHandler.GoToMainMenu();
+        }
+
+        private void btExtreme_Click(object sender, RoutedEventArgs e)
+        {
+            Difficulty = 4;
+            Selected();
+            btExtremeStatic.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ACA700"));
+        }
+        private void btHard_Click(object sender, RoutedEventArgs e)
+        {
+            Difficulty = 3;
+            Selected();
+            btHardStatic.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ACA700"));
+        }
+        private void btMedium_Click(object sender, RoutedEventArgs e)
+        {
+            Difficulty = 2;
+            Selected();
+            btMediumStatic.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ACA700"));
+        }
+
+        private void btEasy_Click(object sender, RoutedEventArgs e)
+        {
+            Difficulty = 1;
+            Selected();
+            btEasyStatic.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ACA700"));
+        }
+        private static void Selected()
+        {
+            btEasyStatic.Background = new SolidColorBrush(Colors.Transparent);
+            btMediumStatic.Background = new SolidColorBrush(Colors.Transparent);
+            btHardStatic.Background = new SolidColorBrush(Colors.Transparent);
+            btExtremeStatic.Background = new SolidColorBrush(Colors.Transparent);
+
+            DifficultySelected = true;
         }
     }
 }

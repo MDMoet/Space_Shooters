@@ -1,6 +1,10 @@
 ﻿using Space_Shooters.classes;
+using Space_Shooters.classes.General.User_DataHandling;
+using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +25,39 @@ namespace Space_Shooters.views
     public partial class Character : UserControl
     {
         private readonly ViewHandler VarViewHandler;
+        private static PlayerPointsHandler playerPointsHandler = new();
+        private static PlayerHPHandler playerHPHandler = new();
+        private static PlayerDamageHandler playerDamageHandler = new();
+        private static PlayerASHandler playerASHandler = new();
+        private static PlayerMSHanlder playerMSHanlder = new();
+        private static PlayerLevelHandler playerLevelHandler = new();
+        private static PlayerLPHandler playerLPHandler = new();
         public Character(ViewHandler VarViewHandler)
         {
             InitializeComponent();
+
+            // Set the datacontext of the progress bar to the playerLPHandler
+            pbLevelProgress.DataContext = playerLPHandler;
+            // Set the maximum value of the progress bar to the TillLevelUp property in the playerLPHandler
+            pbLevelProgress.Maximum = PlayerLPHandler.TillLevelUp;
+            // Set the datacontext of the textblock to the playerLevelHandler
+            tbCurrentLevel.DataContext = playerLevelHandler;
+            // Set the text of the textblock to the current level + 1
+            tbNextLevel.Text = $"{Convert.ToInt32(tbCurrentLevel.Text) + 1}";
+            // Set the datacontext of the textblock to the playerPointsHandler
+            tbPoints.DataContext = playerPointsHandler;
+            // Set the datacontext of the textblock to the playerHPHandler
+            tbAS.DataContext = playerASHandler;
+            // Set the datacontext of the textblock to the playerHPHandler
+            tbHealth.DataContext = playerHPHandler;
+            // Set the datacontext of the textblock to the playerDamageHandler
+            tbDamage.DataContext = playerDamageHandler;
+            // Set the datacontext of the textblock to the playerASHandler
+            tbMS.DataContext = playerMSHanlder;
+           
             this.VarViewHandler = VarViewHandler;
         }
+        
         public void Equipment(object sender, RoutedEventArgs e)
         {
             VarViewHandler.GoToEquipment();
@@ -37,6 +69,39 @@ namespace Space_Shooters.views
         public void Return(object sender, RoutedEventArgs e)
         {
             VarViewHandler.GoToMainMenu();
+        }
+        public void UpgradeHealth(object sender, RoutedEventArgs e)
+        {
+            _UserModel.UserStat.Health = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.Health : _UserModel.UserStat.Health += 15;
+            _UserModel.UserStat.LevelPoints = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.LevelPoints = 0 : _UserModel.UserStat.LevelPoints -= 1;
+            UpdateStats();
+            tbPoints.DataContext = playerPointsHandler = new(); 
+            tbHealth.DataContext = playerHPHandler = new();
+        }
+        public void UpgradeDamage(object sender, RoutedEventArgs e)
+        {
+            _UserModel.UserStat.BaseDamage = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.BaseDamage : _UserModel.UserStat.BaseDamage += 3;
+            _UserModel.UserStat.LevelPoints = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.LevelPoints = 0 : _UserModel.UserStat.LevelPoints -= 1;
+            UpdateStats();
+            tbPoints.DataContext = playerPointsHandler = new();
+            tbDamage.DataContext = playerDamageHandler = new();
+        }
+        public void UpgradeAS(object sender, RoutedEventArgs e)
+        {
+
+            _UserModel.UserStat.BaseAttackSpeed = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.BaseAttackSpeed : _UserModel.UserStat.BaseAttackSpeed -= 25;
+            _UserModel.UserStat.LevelPoints = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.LevelPoints = 0 : _UserModel.UserStat.LevelPoints -= 1;
+            UpdateStats();
+            tbPoints.DataContext = playerPointsHandler = new();
+            tbAS.DataContext = playerASHandler = new();
+        }
+        public void UpgradeMS(object sender, RoutedEventArgs e)
+        {
+            _UserModel.UserStat.BaseSpeed = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.BaseSpeed : _UserModel.UserStat.BaseSpeed += 3;
+            _UserModel.UserStat.LevelPoints = _UserModel.UserStat.LevelPoints <= 0 ? _UserModel.UserStat.LevelPoints = 0 : _UserModel.UserStat.LevelPoints -= 1;
+            UpdateStats();
+            tbPoints.DataContext = playerPointsHandler = new();
+            tbMS.DataContext = playerMSHanlder = new();
         }
     }
 }

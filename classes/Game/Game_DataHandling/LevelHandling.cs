@@ -6,8 +6,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
+using static Space_Shooters.classes.Game.Game_VariableHandling.DifficultyVariable;
 using System.Windows;
 
 namespace Space_Shooters.classes.Game.Game_DataHandling
@@ -41,7 +42,7 @@ namespace Space_Shooters.classes.Game.Game_DataHandling
 
             for (int i = _UserModel.UserStat.Level; i > 0; i--)
             {
-                progression =+ (progression * Progression_Requirement_Multiplier);
+                progression =+ (progression * Progression_Requirement_Multiplier);   
             }
             return progression;
         }

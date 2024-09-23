@@ -17,7 +17,7 @@ using Space_Shooters.Context;
 using Space_Shooters.classes.Game.Game_VariableHandling;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.RNGRandomiser;
-using static Space_Shooters.classes.Game.Game_DataHandling.User;
+using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
 using static Space_Shooters.classes.Game.Game_UIHandling.ItemLogHandler;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Windows.Controls;

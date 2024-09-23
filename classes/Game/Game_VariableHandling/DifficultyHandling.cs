@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
+using static Space_Shooters.classes.Game.Game_VariableHandling.DifficultyVariable;
 
 namespace Space_Shooters.classes.Game.Game_VariableHandling
 {

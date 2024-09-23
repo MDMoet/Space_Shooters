@@ -19,10 +19,11 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using static Space_Shooters.classes.UserKeyBinds;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
-using static Space_Shooters.classes.Game.Game_DataHandling.User;
+using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.DifficultyHandling;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using Space_Shooters.classes.Game.Game_EntityHandling;
 using Space_Shooters.classes.Game.Game_CollisionHandling;
 using Space_Shooters.classes.Game.Game_PlayerHandling;
@@ -45,9 +46,8 @@ namespace Space_Shooters.views
         {
             InitializeComponent();
             VariableInitialize();
-            // Get the stats from the database
-            GetStatsFromDB();
             GetDataFromDB();
+
             // Set the view in the ViewHandler to this view
             this.VarViewHandler = PassedViewHandler;
             StatVarViewHandler = PassedViewHandler;
@@ -103,6 +103,8 @@ namespace Space_Shooters.views
         {
             WaveNumber.Wave = 1;
             Paused = false;
+            imgUser.Source = new BitmapImage(new Uri($"..\\img\\skins\\User_Skins\\{ _UserModel.Skin }.png", UriKind.RelativeOrAbsolute));
+            //MessageBox.Show(imgUser.Source.ToString());
 
             if (_WindowModel != null && _WaveModel != null)
             {

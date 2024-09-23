@@ -17,12 +17,12 @@
             <Setter Property="Stroke" Value="#DFC900" />
             <Setter Property="StrokeThickness" Value="2.5" />
         </Style>
-        
+
         <!-- Reduced StrokeThickness for Stats Title -->
         <Style x:Key="StatsTitleStyle" TargetType="{x:Type local:OutlinedTextControl}" BasedOn="{StaticResource OutlinedTextStyle}">
             <Setter Property="StrokeThickness" Value="2" />
         </Style>
- 
+
         <!-- Common Width and Height for Border -->
         <Style x:Key="CommonBorderStyle" TargetType="{x:Type Border}">
             <Setter Property="BorderBrush" Value="#DFC900" />
@@ -46,85 +46,116 @@
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        
+
         <Viewbox Grid.Column="1">
             <StackPanel>
-                <Viewbox Margin="90,10,0,10">
-                    <local:OutlinedTextControl Text="Character" Width="300" FontSize="30" Style="{StaticResource OutlinedTextStyle}" />
+                <Viewbox Margin="0,10,0,10" HorizontalAlignment="Center" >
+                    <local:OutlinedTextControl Text="Character" Width="195" FontSize="30" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
                 </Viewbox>
-                <Border Width="300" Height="450" Margin="0,0,0,25" Style="{StaticResource CommonBorderStyle}">
+                <Border Width="300" Height="450" Background="Black" Margin="0,0,0,25" Style="{StaticResource CommonBorderStyle}">
                     <Grid>
                         <StackPanel>
-                            <Viewbox Width="250" Margin="0,10,0,10">
-                                <StackPanel Orientation="Horizontal">
-                                    <local:OutlinedTextControl Text="Level:" Width="325" FontSize="24" Style="{StaticResource OutlinedTextStyle}" />
-                                    <local:OutlinedTextControl Text="1" FontSize="18" Style="{StaticResource OutlinedTextStyle}" />
-                                </StackPanel>
+                            <Viewbox Width="250" Height="20" Margin="0,15,0,0">
+                                <Border Style="{StaticResource CommonBorderStyle}">
+                                    <Grid>
+                                        <local:OutlinedTextControl x:Name="tbCurrentLevel" Text="{Binding PlayerLevel}" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Panel.ZIndex="1" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" StrokeThickness="1.2"/>
+                                        <local:OutlinedTextControl x:Name="tbNextLevel" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Panel.ZIndex="1" Margin="0,0,4,0" HorizontalAlignment="Right" VerticalAlignment="Center" StrokeThickness="1.2"/>
+                                        <ProgressBar Opacity="0.5" Width="250" Height="20" x:Name="pbLevelProgress" Value="{Binding PlayerLP}" Background="Transparent" Foreground="#DFC900" BorderBrush="Transparent" />
+                                    </Grid>
+                                </Border>
                             </Viewbox>
-                            <Viewbox Width="250" Margin="0,0,0,10">
-                                <StackPanel Orientation="Horizontal">
-                                    <local:OutlinedTextControl Text="Points available:" Width="300" FontSize="18" Style="{StaticResource OutlinedTextStyle}" />
-                                    <local:OutlinedTextControl Text="1" FontSize="18" Style="{StaticResource OutlinedTextStyle}" />
-                                </StackPanel>
-                            </Viewbox>
-
-                            <Border Name="boStats" Width="250" Height="225" Margin="0,15,0,45" Style="{StaticResource CommonBorderStyle}">
+                            <Viewbox Width="250" Height="20" Margin="0,15,0,0">
                                 <Grid>
-                                    <Border VerticalAlignment="Top" Height="30" Width="250" Margin="-1,-1,0,0" Style="{StaticResource CommonBorderStyle}">
-                                        <local:OutlinedTextControl VerticalAlignment="Top" Text="Stats:" Width="70" Height="30" FontSize="20" Style="{StaticResource StatsTitleStyle}" />
-                                    </Border>
-                                    <Border Name="boStatsLevel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="195" Width="75" Margin="0,-1,-1,0" Style="{StaticResource CommonBorderStyle}">
-                                        <Grid>
-                                            <StackPanel>
-                                                <local:OutlinedTextControl Text="1" Width="10" Height="30" FontSize="20" Style="{StaticResource StatsTitleStyle}" HorizontalAlignment="Center" Margin="0,25,0,0"/>
-                                                <local:OutlinedTextControl Text="1" Width="10" Height="30" FontSize="20" Style="{StaticResource StatsTitleStyle}" HorizontalAlignment="Center" Margin="0,25,0,0"/>
-                                                <local:OutlinedTextControl Text="1" Width="10" Height="30" FontSize="20" Style="{StaticResource StatsTitleStyle}" HorizontalAlignment="Center" Margin="0,25,0,0"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Border>
-                                    <StackPanel Orientation="Horizontal" Margin="0,25,0,0">
-                                        <StackPanel>
-                                            <Button Style="{StaticResource CommonButtonStyle}" Width="20" Margin="10,34,0,0" >
-                                                <Grid>
-                                                    <Line X1="0" Y1="7.5" X2="15" Y2="7.5" Stroke="#DFC900" StrokeThickness="1" />
-                                                    <Line X1="7.5" Y1="0" X2="7.5" Y2="15" Stroke="#DFC900" StrokeThickness="1" />
-                                                </Grid>
-                                            </Button>
-                                            <Button Style="{StaticResource CommonButtonStyle}" Width="20" Margin="10,34,0,0" >
-                                                <Grid>
-                                                    <Line X1="0" Y1="7.5" X2="15" Y2="7.5" Stroke="#DFC900" StrokeThickness="1" />
-                                                    <Line X1="7.5" Y1="0" X2="7.5" Y2="15" Stroke="#DFC900" StrokeThickness="1" />
-                                                </Grid>
-                                            </Button>
-                                            <Button Style="{StaticResource CommonButtonStyle}" Width="20" Margin="10,35,0,0" >
-                                                <Grid>
-                                                    <Line X1="0" Y1="7.5" X2="15" Y2="7.5" Stroke="#DFC900" StrokeThickness="1" />
-                                                    <Line X1="7.5" Y1="0" X2="7.5" Y2="15" Stroke="#DFC900" StrokeThickness="1" />
-                                                </Grid>
-                                            </Button>
-                                        </StackPanel>
-                                        <StackPanel>
-                                            <local:OutlinedTextControl Text="Health:" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Margin="10,34,0,0"/>
-                                            <local:OutlinedTextControl Text="Damage:" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Margin="10,35,0,0"/>
-                                            <local:OutlinedTextControl Text="Attack speed:" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Margin="10,36,0,0" />
-                                        </StackPanel>
-                                    </StackPanel>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <local:OutlinedTextControl Text="Points available:" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Panel.ZIndex="1" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" StrokeThickness="1.2"/>
+                                    <local:OutlinedTextControl x:Name="tbPoints" Text="{Binding PlayerPoints}" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Panel.ZIndex="1" HorizontalAlignment="Right" VerticalAlignment="Center" StrokeThickness="1.2" Grid.Column="1" Grid.ColumnSpan="2"/>
                                 </Grid>
+                            </Viewbox>
+                            <Border Name="boStats" Width="250" Height="250" Margin="0,15,0,15">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"  />
+                                        <RowDefinition Height="0.5*"  />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Border Grid.Row="0" Grid.ColumnSpan="2" Style="{StaticResource CommonBorderStyle}" />
+                                    <Border Grid.Row="1" Grid.RowSpan="10" Grid.Column="1" Grid.ColumnSpan="1" Style="{StaticResource CommonBorderStyle}" BorderThickness="1 0 1 1" />
+                                    <Border Grid.RowSpan="10" Grid.ColumnSpan="2" Style="{StaticResource CommonBorderStyle}" />
 
+                                    <local:OutlinedTextControl Text="STATS:" FontSize="14" Style="{StaticResource OutlinedTextStyle}" Grid.Row="0" Grid.ColumnSpan="2" Margin="2" HorizontalAlignment="Center" StrokeThickness="1.2" />
+                                    <WrapPanel Grid.Row="2" Grid.Column="0" Margin="15,0,0,0">
+                                        <Button Style="{StaticResource CommonButtonStyle}" Width="20" Margin="2" Click="UpgradeHealth" >
+                                            <Grid>
+                                                <Line X1="0" Y1="7.5" X2="15" Y2="7.5" Stroke="#DFC900" StrokeThickness="1" />
+                                                <Line X1="7.5" Y1="0" X2="7.5" Y2="15" Stroke="#DFC900" StrokeThickness="1" />
+                                            </Grid>
+                                        </Button>
+                                        <local:OutlinedTextControl Text="Health:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Margin="5" StrokeThickness="1.2" />
+                                    </WrapPanel>
+                                    <local:OutlinedTextControl x:Name="tbHealth" Text="{Binding PlayerHP}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+
+                                    <WrapPanel Grid.Row="4" Grid.Column="0" Margin="15,0,0,0">
+                                        <Button Style="{StaticResource CommonButtonStyle}" Width="20" Margin="2" Click="UpgradeDamage">
+                                            <Grid>
+                                                <Line X1="0" Y1="7.5" X2="15" Y2="7.5" Stroke="#DFC900" StrokeThickness="1" />
+                                                <Line X1="7.5" Y1="0" X2="7.5" Y2="15" Stroke="#DFC900" StrokeThickness="1" />
+                                            </Grid>
+                                        </Button>
+                                        <local:OutlinedTextControl Text="Damage:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Margin="5" StrokeThickness="1.2" />
+                                    </WrapPanel>
+                                    <local:OutlinedTextControl x:Name="tbDamage" Text="{Binding PlayerDamage}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+                                   
+                                    <WrapPanel Grid.Row="6" Grid.Column="0" Margin="15,0,0,0">
+                                        <Button Style="{StaticResource CommonButtonStyle}" Width="20" Margin="2" Click="UpgradeAS" >
+                                            <Grid>
+                                                <Line X1="0" Y1="7.5" X2="15" Y2="7.5" Stroke="#DFC900" StrokeThickness="1" />
+                                                <Line X1="7.5" Y1="0" X2="7.5" Y2="15" Stroke="#DFC900" StrokeThickness="1" />
+                                            </Grid>
+                                        </Button>
+                                        <local:OutlinedTextControl Text="Attack speed:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Margin="5" StrokeThickness="1.2" />
+                                    </WrapPanel>
+                                    <local:OutlinedTextControl x:Name="tbAS" Text="{Binding PlayerAS}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+
+                                    <WrapPanel Grid.Row="8" Grid.Column="0" Margin="15,0,0,0">
+                                        <Button Style="{StaticResource CommonButtonStyle}" Width="20" Margin="2" Click="UpgradeMS" >
+                                            <Grid>
+                                                <Line X1="0" Y1="7.5" X2="15" Y2="7.5" Stroke="#DFC900" StrokeThickness="1" />
+                                                <Line X1="7.5" Y1="0" X2="7.5" Y2="15" Stroke="#DFC900" StrokeThickness="1" />
+                                            </Grid>
+                                        </Button>
+                                        <local:OutlinedTextControl Text="Movement Speed:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Margin="5" StrokeThickness="1.2" />
+                                    </WrapPanel>
+                                    <local:OutlinedTextControl x:Name="tbMS" Text="{Binding PlayerMS}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+                                </Grid>
                             </Border>
-                            <Button Name="btEquipment" Click="Equipment" Style="{StaticResource CommonButtonStyle}" >
+                            <Button Width="250" Height="25" Name="btSkins" Click="Skins" Style="{StaticResource CommonButtonStyle}" Cursor="Hand">
                                 <Viewbox>
-                                    <local:OutlinedTextControl Text="Equipment" FontSize="24" Style="{StaticResource OutlinedTextStyle}" />
+                                    <local:OutlinedTextControl Text="Skins" Width="75" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
                                 </Viewbox>
                             </Button>
-                            <Button Name="btSkins" Click="Skins" Style="{StaticResource CommonButtonStyle}">
+                            <Button Width="250" Height="25" Name="btEquipment" Click="Equipment" Style="{StaticResource CommonButtonStyle}" Cursor="Hand">
                                 <Viewbox>
-                                    <local:OutlinedTextControl Text="Skins" FontSize="24" Style="{StaticResource OutlinedTextStyle}" />
+                                    <local:OutlinedTextControl Text="Equipment" Width="150" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
                                 </Viewbox>
                             </Button>
-                            <Button Name="btReturn" Click="Return" Style="{StaticResource CommonButtonStyle}">
+                            <Button Width="250" Height="25" Name="btReturn" Click="Return" Style="{StaticResource CommonButtonStyle}" Cursor="Hand">
                                 <Viewbox>
-                                    <local:OutlinedTextControl Text="Return" FontSize="24" Style="{StaticResource OutlinedTextStyle}" />
+                                    <local:OutlinedTextControl Text="Return" Width="100" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
                                 </Viewbox>
                             </Button>
                         </StackPanel>

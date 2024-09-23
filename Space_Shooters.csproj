@@ -10,7 +10,11 @@
 
   <ItemGroup>
     <None Remove="img\skins\entity_skins\entity_default.png" />
+    <None Remove="img\skins\Equipment_Skins\Equipment_Skin_LaserCannon.png" />
+    <None Remove="img\skins\Item_Skins\Item_Skin_AlienEye.png" />
+    <None Remove="img\skins\User_Skins\ocvfei8g.png" />
     <None Remove="img\skins\User_Skins\User_Default.png" />
+    <None Remove="img\skins\User_Skins\w3ci6oxz.png" />
     <None Remove="img\Space_Background.png" />
   </ItemGroup>
 
@@ -38,12 +42,23 @@
 
   <ItemGroup>
     <Resource Include="img\skins\entity_skins\entity_default.png" />
+    <Resource Include="img\skins\Equipment_Skins\Equipment_Skin_LaserCannon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\skins\Item_Skins\Item_Skin_AlienEye.png" />
+    <Resource Include="img\skins\User_Skins\ocvfei8g.png" />
     <Resource Include="img\skins\User_Skins\User_Default.png" />
+    <Resource Include="img\skins\User_Skins\w3ci6oxz.png" />
     <Resource Include="img\Space_Background.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="classes\Equipment\" />
+    <Folder Include="classes\Inventory\" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Space_Shooters.views;
 using static Space_Shooters.classes.UserKeyBinds;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using Space_Shooters.classes.Game.Game_VariableHandling;
 using Space_Shooters.classes.Game.Game_PlayerHandling;
 using System.Runtime.CompilerServices;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;

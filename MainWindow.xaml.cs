@@ -15,6 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Space_Shooters.classes;
 using Space_Shooters.views;
+using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
+using Space_Shooters.classes.Game.Game_DataHandling;
+using Space_Shooters.classes.Game.Game_EntityHandling;
 
 namespace Space_Shooters
 {
@@ -28,6 +31,8 @@ namespace Space_Shooters
         public MainWindow()
         {
             InitializeComponent();
+            // Get the stats from the database
+            GetStatsFromDB();
             VarViewHandler = new ViewHandler();
             DataContext = VarViewHandler;
         }

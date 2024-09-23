@@ -39,7 +39,8 @@ namespace Space_Shooters.classes
 
         public ViewHandler()
         {
-            _view = new views.Game(this); // Initialize the _view field to avoid CS8618 error
+            // Default view is the main menu
+            _view = new views.MainMenu(this); // Initialize the _view field to avoid CS8618 error
         }
 
         // Create methods to change the view
@@ -57,7 +58,7 @@ namespace Space_Shooters.classes
         }
         public void GoToInventory()
         {
-            View = new Inventory();
+            View = new views.Inventory(this);
         }
         public void GoToItemShop()
         {
@@ -69,7 +70,7 @@ namespace Space_Shooters.classes
         }
         public void GoToEquipment()
         {
-            View = new Equipment(this);
+            View = new views.Equipment(this);
         }
         public void GoToSkins()
         {
