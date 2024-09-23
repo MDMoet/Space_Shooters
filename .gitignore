@@ -179,6 +179,9 @@ DocProject/Help/html
 # Click-Once directory
 publish/
 
+# Ignore user data files
+user_data.txt
+
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml

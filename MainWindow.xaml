@@ -9,6 +9,10 @@
         WindowState="Maximized" 
         WindowStyle="None"
         Title="Space Shooters" Height="450" Width="800">
+    <Window.Resources>
+        <FontFamily x:Key="Montserrat Text">/fonts/Montserrat-VariableFont_wght.ttf/#Montserrat SemiBold</FontFamily>
+        <FontFamily x:Key="Montserrat Title">/fonts/MontserratSubrayada-Regular.ttf/#Montserrat Subrayada</FontFamily>
+    </Window.Resources>
     <Grid>
         <Viewbox Stretch="UniformToFill">
             <Image Source="img/Space_Background.png"></Image>
@@ -16,5 +20,31 @@
         <Grid Panel.ZIndex="2">
             <ContentControl Grid.Row="1" Content="{Binding View}"/>
         </Grid>
+        <Viewbox Width="450" Height="250" Panel.ZIndex="8">
+            <Border x:Name="boDuplicateKeyBind" Width="450" Panel.ZIndex="2" Height="250" Background="Black" BorderBrush="DarkRed" BorderThickness="8" Visibility="Collapsed">
+                <Viewbox Grid.Row="0" Margin="2,6,0,6" Width="442">
+                    <local:OutlinedTextControl Text="Key already in use" FontSize="16" FontFamily="{StaticResource Montserrat Text}" Stroke="DarkRed" StrokeThickness="2" Margin="5,0,10,10" />
+                </Viewbox>
+            </Border>
+        </Viewbox>
+        <Viewbox Width="450" Height="250" Panel.ZIndex="8">
+            <Border x:Name="boSelectItem" Width="450" Panel.ZIndex="2" Height="250" Background="Black" BorderBrush="DarkOrange" BorderThickness="8" Visibility="Collapsed">
+                <Viewbox Grid.Row="0" Margin="2,6,0,6" Width="442">
+                    <local:OutlinedTextControl Text="Select an item" FontSize="16" FontFamily="{StaticResource Montserrat Text}" Stroke="DarkOrange" StrokeThickness="2" Margin="5,0,10,10" />
+                </Viewbox>
+            </Border>
+        </Viewbox>
+        <Viewbox Width="450" Height="250" Panel.ZIndex="8">
+            <Border x:Name="boNoInputGiven" Width="450" Panel.ZIndex="2" Height="250" Background="Black" BorderBrush="DarkOrange" BorderThickness="8" Visibility="Collapsed">
+                <Viewbox Grid.Row="0" Margin="2,6,0,6" Width="442">
+                    <local:OutlinedTextControl Text="Enter an amount" FontSize="16" FontFamily="{StaticResource Montserrat Text}" Stroke="DarkOrange" StrokeThickness="2" Margin="5,0,10,10" />
+                </Viewbox>
+            </Border>
+        </Viewbox>
+        <Viewbox Width="200" Height="100" Panel.ZIndex="8">
+            <Border x:Name="boGiveUpConfirm" Background="Red" Width="200" Height="100" Visibility="Collapsed">
+
+            </Border>
+        </Viewbox>
     </Grid>
 </Window>

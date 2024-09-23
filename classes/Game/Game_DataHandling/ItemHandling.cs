@@ -17,7 +17,7 @@ using Space_Shooters.Context;
 using Space_Shooters.classes.Game.Game_VariableHandling;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.RNGRandomiser;
-using static Space_Shooters.classes.Game.Game_DataHandling.User;
+using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
 using static Space_Shooters.classes.Game.Game_UIHandling.ItemLogHandler;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System.Windows.Controls;
@@ -33,7 +33,7 @@ namespace Space_Shooters.classes.Game.Game_DataHandling
             int entityLevel_ = Convert.ToInt32(entity.Tag);
             int itemsNum_ = _ItemModel.ItemArray.Length - 1;
             Item ItemClass_ = new();
-            using var context = new Context.GameContext();
+            using var context = new GameContext();
             // Assuming you have a primary key 'Id' in your UserStats table
             foreach (int itemId_ in _ItemModel.ItemArray)
             {
@@ -42,13 +42,13 @@ namespace Space_Shooters.classes.Game.Game_DataHandling
                 {
                     int goldDropped = GoldDropped(entityLevel_);
                    
-                    AddItemsToInventory(itemId_, Item_.RequiredLevel, goldDropped);
+                    AddItemsToInventory(itemId_, goldDropped);
                     AddItem(Item_.Name, goldDropped);
                     return;
                 }
                 if (LayeredRandomise(Item_.RequiredLevel, Item_.Worth))
                 {
-                    AddItemsToInventory(itemId_, Item_.RequiredLevel, 1);
+                    AddItemsToInventory(itemId_, 1);
                     AddItem(Item_.Name, 1);
                 }
             }

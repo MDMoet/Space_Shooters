@@ -17,7 +17,9 @@ public partial class Item
 
     public int Worth { get; set; }
 
-    public virtual ItemStat? ItemStat { get; set; }
+    public virtual ICollection<EntityEquipment> EntityEquipments { get; set; } = new List<EntityEquipment>();
 
     public virtual ICollection<Itemshop> Itemshops { get; set; } = new List<Itemshop>();
+
+    public virtual ICollection<UserItemInventory> UserItemInventories { get; set; } = new List<UserItemInventory>();
 }

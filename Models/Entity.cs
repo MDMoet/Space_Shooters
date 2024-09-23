@@ -11,6 +11,8 @@ public partial class Entity
 
     public int SpawnWave { get; set; }
 
+    public virtual ICollection<EntityEquipment> EntityEquipments { get; set; } = new List<EntityEquipment>();
+
     public virtual EntitySkin? EntitySkin { get; set; }
 
     public virtual EntityStat? EntityStat { get; set; }

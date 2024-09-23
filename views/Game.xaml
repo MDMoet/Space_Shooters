@@ -26,10 +26,10 @@
             </StackPanel>
             
             <!-- Wave counter-->
-            <local:OutlinedTextControl x:Name="tbWaveCounter" Width="100" Height="50" FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="{Binding Wave, Mode=OneWay}" BorderBrush="Yellow" Opacity="0.5" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0"/>
+            <local:OutlinedTextControl x:Name="tbWaveCounter" Width="100" Height="50" FontSize="20" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" Text="{Binding Wave, Mode=OneWay}" BorderBrush="Yellow" Opacity="0.5" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0"/>
             
             <!-- User UI -->
-            <Border x:Name="boPauseGame" Width="250" Panel.ZIndex="5" Height="300" BorderBrush="#DFC900" BorderThickness="2" Visibility="Collapsed">
+            <Border x:Name="boPauseGame" Width="250" Panel.ZIndex="5" Height="300" Background="Black" BorderBrush="#DFC900" BorderThickness="2" Visibility="Collapsed">
                 <Grid Width="250" Height="300">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
@@ -40,27 +40,27 @@
                     </Grid.RowDefinitions>
                     <local:OutlinedTextControl HorizontalAlignment="Center" FontSize="40" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Paused" BorderBrush="Yellow"/>
                     <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
-                        <local:OutlinedTextControl FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Current Wave: " BorderBrush="Yellow" StrokeThickness="1"/>
-                        <local:OutlinedTextControl x:Name="tbWaveNum" FontSize="20" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="{Binding Wave, Mode=OneWay}" BorderBrush="Yellow" StrokeThickness="1"/>
+                        <local:OutlinedTextControl FontSize="20" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" Text="Current Wave: " BorderBrush="Yellow" StrokeThickness="1"/>
+                        <local:OutlinedTextControl x:Name="tbWaveNum" FontSize="20" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" Text="{Binding Wave, Mode=OneWay}" BorderBrush="Yellow" StrokeThickness="1"/>
                     </StackPanel>
-                    <Button Click="ContinueGame" Grid.Row="2" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
-                        <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Continue" BorderBrush="Yellow" StrokeThickness="1" />
+                    <Button Click="ContinueGame" Grid.Row="2" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1" Cursor="Hand">
+                        <local:OutlinedTextControl FontSize="15" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" Text="Continue" BorderBrush="Yellow" StrokeThickness="1" />
                     </Button>
-                    <Button Click="GiveUp" Grid.Row="3" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
-                        <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Give up" BorderBrush="Yellow" StrokeThickness="1" />
+                    <Button Click="GiveUp" Grid.Row="3" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1" Cursor="Hand">
+                        <local:OutlinedTextControl FontSize="15" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" Text="Give up" BorderBrush="Yellow" StrokeThickness="1" />
                     </Button>
-                    <Button Click="ExitToDesktop" Grid.Row="4" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1">
-                        <local:OutlinedTextControl FontSize="15" Style="{StaticResource OutlinedTextStyle}" Stroke="#DFC900" Text="Exit to desktop" BorderBrush="Yellow" StrokeThickness="1"/>
+                    <Button Click="ExitToDesktop" Grid.Row="4" Width="150" Margin="15" Background="Black" BorderBrush="#DFC900" BorderThickness="1" Cursor="Hand">
+                        <local:OutlinedTextControl FontSize="15" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" Text="Exit to desktop" BorderBrush="Yellow" StrokeThickness="1"/>
                     </Button>
                 </Grid>
             </Border>
 
             <!-- Main Gameplay Area -->
             <Grid x:Name="MainGrid" Grid.Row="0">
-                <local:OutlinedTextControl x:Name="tbCenterText" Style="{StaticResource OutlinedTextStyle}" FontSize="90" Stroke="#DFC900" StrokeThickness="5" Text="{Binding Time, BindsDirectlyToSource=True,Mode=TwoWay}" BorderBrush="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Border x:Name="boUserHitBox" Width="75" Height="87" BorderBrush="Transparent" BorderThickness="1" Margin="0,412,0,0">
+                <local:OutlinedTextControl x:Name="tbCenterText" FontFamily="{StaticResource Montserrat Text}" FontSize="90" Stroke="#DFC900" StrokeThickness="5" Text="{Binding Time, BindsDirectlyToSource=True,Mode=TwoWay}" BorderBrush="Yellow" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border x:Name="boUserHitBox" Width="90" Height="90" BorderBrush="Transparent" BorderThickness="1" Margin="0,412,0,0">
                     <StackPanel>
-                        <Image x:Name="imgUser" Source="../img/Skins/User_Skins/User_Default.png" />
+                        <Image Width="80" Height="80"  x:Name="imgUser" Source="../img/Skins/User_Skins/User_Default.png" />
                         <ProgressBar x:Name="pbUserHealth" Height="5" BorderBrush="Black" Value="{Binding PlayerHP}" Foreground="Green" Background="Red"   />
                     </StackPanel>
                 </Border>

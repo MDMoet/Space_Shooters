@@ -5,6 +5,8 @@ namespace Space_Shooters.Models;
 
 public partial class UserKeybind
 {
+    public int UserKeybindId { get; set; }
+
     public int UserId { get; set; }
 
     public int KeybindId { get; set; }

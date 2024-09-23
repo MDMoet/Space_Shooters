@@ -5,6 +5,8 @@ namespace Space_Shooters.Models;
 
 public partial class EntityEquipment
 {
+    public int TableId { get; set; }
+
     public int EntityId { get; set; }
 
     public int ItemId { get; set; }

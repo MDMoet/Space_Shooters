@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Space_Shooters.classes;
+using Space_Shooters.classes.General.User_DataHandling;
 using Space_Shooters.views;
 
 namespace Space_Shooters.views
@@ -38,7 +39,7 @@ namespace Space_Shooters.views
         }
         public void Inventory(object sender, RoutedEventArgs e)
         {
-            VarViewHandler.GoToInventory(); // Handle button click to navigate to the game menu
+            VarViewHandler.GoToInventory(); // Handle button click to navigate to the game 
         }
         public void ItemShop(object sender, RoutedEventArgs e)
         {

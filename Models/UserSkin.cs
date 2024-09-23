@@ -7,7 +7,9 @@ public partial class UserSkin
 {
     public int UserId { get; set; }
 
-    public string Skin { get; set; } = null!;
+    public int SkinId { get; set; }
+
+    public virtual Skin Skin { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
 }

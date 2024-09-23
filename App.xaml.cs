@@ -9,6 +9,7 @@ namespace Space_Shooters
     /// </summary>
     public partial class App : Application
     {
+
     }
 
 }

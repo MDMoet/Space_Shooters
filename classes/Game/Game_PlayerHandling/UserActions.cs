@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using System.Collections.Generic;
 using Space_Shooters.Models;
 using Space_Shooters.classes.Game.Game_DataHandling;

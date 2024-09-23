@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,76 +16,123 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Space_Shooters.classes.General.User_DataHandling;
 using Space_Shooters.views;
 
 namespace Space_Shooters.classes
 {
     public class ViewHandler : INotifyPropertyChanged
     {
-        // Create a private UserControl to store the current view
         private UserControl _view;
 
-        // Create a public UserControl to store the current view
         public UserControl View
         {
-            // Get the current view
             get { return _view; }
             set
             {
-                // Set the current view
                 _view = value;
-                // Call the OnPropertyChanged method
                 OnPropertyChanged();
             }
         }
 
         public ViewHandler()
         {
-            _view = new views.Game(this); // Initialize the _view field to avoid CS8618 error
+            UserModels.ViewHistory = [];
+             _view = new views.Register(this);
+            SetPreviousView(_view);
         }
 
-        // Create methods to change the view
         public void GoToMainMenu()
         {
             View = new MainMenu(this);
+            SetPreviousView(View);
         }
+
         public void GoToGameMenu()
         {
             View = new GameMenu(this);
+            SetPreviousView(View);
         }
+
         public void GoToCharacter()
         {
             View = new Character(this);
+            SetPreviousView(View);
         }
+
         public void GoToInventory()
         {
-            View = new Inventory();
+            View = new views.Inventory(this);
+            SetPreviousView(View);
         }
+
         public void GoToItemShop()
         {
-            View = new ItemShop();
+            View = new views.ItemShop(this);
+            SetPreviousView(View);
         }
+
         public void GoToSettings()
         {
-            View = new Settings();
+            View = new views.Settings(this);
+            SetPreviousView(View);
         }
+
         public void GoToEquipment()
         {
-            View = new Equipment(this);
+            View = new views.Equipment(this);
+            SetPreviousView(View);
         }
+
         public void GoToSkins()
         {
             View = new Skins(this);
+            SetPreviousView(View);
         }
+
         public void GoToGame()
         {
             View = new views.Game(this);
+            SetPreviousView(View);
+        }
+        public void GoToUserShop()
+        {
+            View = new views.UserShop(this);
+            SetPreviousView(View);
+        }
+        public void GoToLogin()
+        {
+            View = new Login(this);
+        }
+        public void GoToRegister()
+        {
+            View = new Register(this);
         }
 
-        // Create an event to notify the view that the view has changed and for methods to subscribe to the event
+        public void Return()
+        {
+            if (UserModels.ViewHistory.Count > 1)
+            {
+                // Remove the current view
+                UserModels.ViewHistory.RemoveAt(UserModels.ViewHistory.Count - 1);
+                // Set the previous view
+                View = UserModels.ViewHistory[UserModels.ViewHistory.Count - 1];
+            }
+            else
+            {
+                MessageBox.Show("No previous view to return to.");
+            }
+        }
+
+        private void SetPreviousView(UserControl view)
+        {   
+            if (view != null)
+            {
+                UserModels.ViewHistory.Add(view);
+            }
+        }
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Create a method to call the event
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

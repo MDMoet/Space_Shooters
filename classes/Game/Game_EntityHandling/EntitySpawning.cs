@@ -77,11 +77,16 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
     {
         public static void SpawnEntityConfiguration()
         {
-            int sizeIncrease = 5 * _Enemy.Level;
-            int lifeIncrease = 6 * _Enemy.Level;
-            if (_Enemy.Level < 5)
+            int sizeIncrease = 5 * 16;
+            if (_Enemy.Level < 16)
             {
-                lifeIncrease -= 11 * _Enemy.Level;
+                sizeIncrease = 5 * _Enemy.Level;
+            }
+
+            int lifeIncrease = 6 * _Enemy.Level;
+            if (_Enemy.Level <= 5)
+            {
+                lifeIncrease -= 10 * _Enemy.Level;
             }
 
             lifeIncrease = DifficultyHandling.LifeIncrease(lifeIncrease);

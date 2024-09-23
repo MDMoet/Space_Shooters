@@ -5,7 +5,11 @@ namespace Space_Shooters.Models;
 
 public partial class DefaultKeybind
 {
-    public int KeybindId { get; set; }
+    public int DefaultKeybindId { get; set; }
 
-    public virtual KeybindEnum Keybind { get; set; } = null!;
+    public int ActionId { get; set; }
+
+    public virtual UserAction Action { get; set; } = null!;
+
+    public virtual KeybindEnum DefaultKeybindNavigation { get; set; } = null!;
 }

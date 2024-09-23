@@ -17,18 +17,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using static Space_Shooters.classes.UserKeyBinds;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
-using static Space_Shooters.classes.Game.Game_DataHandling.User;
+using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.DifficultyHandling;
+using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using Space_Shooters.classes.Game.Game_EntityHandling;
 using Space_Shooters.classes.Game.Game_CollisionHandling;
 using Space_Shooters.classes.Game.Game_PlayerHandling;
 using Space_Shooters.classes.Game.Game_VariableHandling;
 using Space_Shooters.classes.Game.Game_UIHandling;
 using Space_Shooters.Models;
+using Space_Shooters.classes.General.User_DataHandling;
 
 namespace Space_Shooters.views
 {
@@ -45,9 +46,7 @@ namespace Space_Shooters.views
         {
             InitializeComponent();
             VariableInitialize();
-            // Get the stats from the database
-            GetStatsFromDB();
-            GetDataFromDB();
+
             // Set the view in the ViewHandler to this view
             this.VarViewHandler = PassedViewHandler;
             StatVarViewHandler = PassedViewHandler;
@@ -65,11 +64,13 @@ namespace Space_Shooters.views
             // Start the game loop
             Tick();
             // Set the datacontext of the progressbar to the hpAmount (PlayerHP in PlayerHPHandler class)
-            PlayerHPHandler playerHPHandler = new();
+            PlayerGameHPHandler playerHPHandler = new();
             // Set the datacontext of the progressbar to the hpAmount (PlayerHP in PlayerHPHandler class)
             pbUserHealth.DataContext = playerHPHandler;
             // Set the maximum value of the progressbar to the player's max health
-            pbUserHealth.Maximum = PlayerHPHandler.PlayerHP;
+            pbUserHealth.Maximum = PlayerGameHPHandler.PlayerHP;
+
+            EquipmentStatBoost();
         }
         internal static async void StartCountDownCompleted()
         {
@@ -103,6 +104,8 @@ namespace Space_Shooters.views
         {
             WaveNumber.Wave = 1;
             Paused = false;
+            imgUser.Source = new BitmapImage(new Uri($"..\\img\\skins\\User_Skins\\{ _UserModel.Skin }.png", UriKind.RelativeOrAbsolute));
+            //MessageBox.Show(imgUser.Source.ToString());
 
             if (_WindowModel != null && _WaveModel != null)
             {
@@ -180,7 +183,7 @@ namespace Space_Shooters.views
             CenterTextHandling.UpdateCenterText("Game over!");
             // Wait for 3 seconds
             await Task.Delay(3 * 1000);
-            StatVarViewHandler.GoToGameMenu();
+            StatVarViewHandler.GoToMainMenu();
         }
 
     }

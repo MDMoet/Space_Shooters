@@ -16,6 +16,7 @@ namespace Space_Shooters.classes.Game.Game_DataHandling
         internal  int WaveMax { get; set; }
         internal bool WaveStarted { get; set; }
         internal bool GameEnded { get; set; }
+
     }
     
     internal class WindowModel
@@ -25,12 +26,6 @@ namespace Space_Shooters.classes.Game.Game_DataHandling
         internal Border BoUser { get; set; }
         internal OutlinedTextControl CenterBlock { get; set; }
         internal StackPanel ItemLog { get; set; }
-    }
-    internal class UserModel
-    {
-        internal UserStat UserStat { get; set; }
-        internal UserGameStat UserGameStat { get; set; }
-
     }
     internal class ItemModel
     {

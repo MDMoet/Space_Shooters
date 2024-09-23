@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
-using static Space_Shooters.classes.Game.Game_DataHandling.User;
+using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
 using static Space_Shooters.classes.Game.Game_VariableHandling.GameTick;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;

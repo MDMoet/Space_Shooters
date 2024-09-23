@@ -13,5 +13,7 @@ public partial class UsersShop
 
     public int Worth { get; set; }
 
+    public int Amount { get; set; }
+
     public virtual User User { get; set; } = null!;
 }

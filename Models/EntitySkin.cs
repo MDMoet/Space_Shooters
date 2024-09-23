@@ -7,7 +7,9 @@ public partial class EntitySkin
 {
     public int EntityId { get; set; }
 
-    public string Skin { get; set; } = null!;
+    public int SkinId { get; set; }
 
     public virtual Entity Entity { get; set; } = null!;
+
+    public virtual Skin Skin { get; set; } = null!;
 }

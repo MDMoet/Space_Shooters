@@ -8,11 +8,11 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using Space_Shooters.views;
+using Space_Shooters.Context;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
 using static Space_Shooters.classes.Game.Game_VariableHandling.PassableVariables;
 using static Space_Shooters.classes.Game.Game_VariableHandling.Variables;
 using Space_Shooters.classes.Game.Game_DataHandling;
-using Space_Shooters.Context;
 using Space_Shooters.Models;
 using System.Security.Cryptography;
 
@@ -27,7 +27,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             EntitySkin EntitySkinClass_ = new();
             EntityStat EntityStatsClass_ = new();
             EntityEquipment EntityEquipmentClass_ = new();
-            using var context = new Context.GameContext();
+            using var context = new GameContext();
             // Assuming you have a primary key 'Id' in your UserStats table
             var Entity_ = context.Entities.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
             if (Entity_ != null)
@@ -37,7 +37,10 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             var EntitySkin_ = context.EntitySkins.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
             if (EntitySkin_ != null)
             {
-                EntitySkinClass_.Skin = EntitySkin_.Skin;
+                EntitySkinClass_.Skin = context.EntitySkins
+                        .Where(us => us.SkinId == EntitySkin_.SkinId)
+                        .Select(us => us.Skin)
+                        .FirstOrDefault();
             }
             var EntityStats_ = context.EntityStats.FirstOrDefault(ugs => ugs.EntityId == EntityId_);
             if (EntityStats_ != null)
@@ -50,7 +53,8 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                 EntityStatsClass_.BaseAttackSpeed = EntityStats_.BaseAttackSpeed;
             }
             var EntityEquipment_ = context.EntityEquipments.Where(e => e.EntityId == EntityId_).Select(e => e.ItemId).ToArray();
-                _ItemModel.ItemArray = EntityEquipment_;
+
+            _ItemModel.ItemArray = EntityEquipment_;
             if (_EntityModel != null)
             {
                 _EntityModel.Entity = EntityClass_;
@@ -73,7 +77,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
             int[] ia;
             int ei_;
             Random random = new();
-            using var context = new Context.GameContext();
+            using var context = new GameContext();
             // Query the database to get entities that spawn in the current wave
             var e_ = context.Entities
                                   .Where(e => e.SpawnWave <= Wave)
@@ -111,7 +115,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                 _Enemy.Base_damage = _EntityModel.EntityStat.BaseDamage;
                 _Enemy.Base_speed = _EntityModel.EntityStat.BaseSpeed;
                 _Enemy.Base_attack_speed = _EntityModel.EntityStat.BaseAttackSpeed;
-                _Enemy.Skin = _EntityModel.EntitySkin.Skin;
+                _Enemy.Skin = _EntityModel.EntitySkin.Skin.Skin1;
                 return _Enemy;
             }
             else
@@ -124,7 +128,7 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
                     Base_damage = _EntityModel.EntityStat.BaseDamage,
                     Base_speed = _EntityModel.EntityStat.BaseSpeed,
                     Base_attack_speed = _EntityModel.EntityStat.BaseAttackSpeed,
-                    Skin = _EntityModel.EntitySkin.Skin,
+                    Skin = _EntityModel.EntitySkin.Skin.Skin1,
                     Item = null,
                     Equipment = null
                 };

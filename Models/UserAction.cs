@@ -9,5 +9,7 @@ public partial class UserAction
 
     public string Action { get; set; } = null!;
 
+    public virtual ICollection<DefaultKeybind> DefaultKeybinds { get; set; } = new List<DefaultKeybind>();
+
     public virtual ICollection<UserKeybind> UserKeybinds { get; set; } = new List<UserKeybind>();
 }

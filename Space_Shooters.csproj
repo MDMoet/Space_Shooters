@@ -9,8 +9,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="img\skins\entity_skins\entity_default.png" />
+    <None Remove="fonts\Montserrat-VariableFont_wght.ttf" />
+    <None Remove="fonts\MontserratSubrayada-Regular.ttf" />
+    <None Remove="img\select.png" />
+    <None Remove="img\skins\entity_skins\Entity_Adolescent.png" />
+    <None Remove="img\skins\entity_skins\Entity_Adult.png" />
+    <None Remove="img\skins\entity_skins\Entity_Child.png" />
+    <None Remove="img\skins\entity_skins\Entity_Default.png" />
+    <None Remove="img\skins\entity_skins\Entity_Teen.png" />
+    <None Remove="img\skins\Equipment_Skins\Health_Cannon.png" />
+    <None Remove="img\skins\Equipment_Skins\Laser_Cannon.png" />
+    <None Remove="img\skins\Equipment_Skins\Multiplier_Cannon.png" />
+    <None Remove="img\skins\Item_Skins\Item_Skin_AlienEye.png" />
+    <None Remove="img\skins\User_Skins\Alien_Aircraft.png" />
+    <None Remove="img\skins\User_Skins\Avo.png" />
+    <None Remove="img\skins\User_Skins\Butterfly.png" />
+    <None Remove="img\skins\User_Skins\Divine_Wheel.png" />
+    <None Remove="img\skins\User_Skins\Efteling.png" />
+    <None Remove="img\skins\User_Skins\Green_Fighter.png" />
+    <None Remove="img\skins\User_Skins\ocvfei8g.png" />
+    <None Remove="img\skins\User_Skins\Phoenix.png" />
+    <None Remove="img\skins\User_Skins\Piracy.png" />
+    <None Remove="img\skins\User_Skins\Rocket.png" />
+    <None Remove="img\skins\User_Skins\Rowy.png" />
     <None Remove="img\skins\User_Skins\User_Default.png" />
+    <None Remove="img\skins\User_Skins\w3ci6oxz.png" />
     <None Remove="img\Space_Background.png" />
   </ItemGroup>
 
@@ -37,8 +60,35 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="img\skins\entity_skins\entity_default.png" />
+    <Resource Include="fonts\Montserrat-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="fonts\MontserratSubrayada-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\select.png" />
+    <Resource Include="img\skins\entity_skins\Entity_Adolescent.png" />
+    <Resource Include="img\skins\entity_skins\Entity_Adult.png" />
+    <Resource Include="img\skins\entity_skins\Entity_Child.png" />
+    <Resource Include="img\skins\entity_skins\Entity_Default.png" />
+    <Resource Include="img\skins\entity_skins\Entity_Teen.png" />
+    <Resource Include="img\skins\Equipment_Skins\Health_Cannon.png" />
+    <Resource Include="img\skins\Equipment_Skins\Laser_Cannon.png" />
+    <Resource Include="img\skins\Equipment_Skins\Multiplier_Cannon.png" />
+    <Resource Include="img\skins\Item_Skins\Item_Skin_AlienEye.png" />
+    <Resource Include="img\skins\User_Skins\Alien_Aircraft.png" />
+    <Resource Include="img\skins\User_Skins\Avo.png" />
+    <Resource Include="img\skins\User_Skins\Butterfly.png" />
+    <Resource Include="img\skins\User_Skins\Divine_Wheel.png" />
+    <Resource Include="img\skins\User_Skins\Efteling.png" />
+    <Resource Include="img\skins\User_Skins\Green_Fighter.png" />
+    <Resource Include="img\skins\User_Skins\ocvfei8g.png" />
+    <Resource Include="img\skins\User_Skins\Phoenix.png" />
+    <Resource Include="img\skins\User_Skins\Piracy.png" />
+    <Resource Include="img\skins\User_Skins\Rocket.png" />
+    <Resource Include="img\skins\User_Skins\Rowy.png" />
     <Resource Include="img\skins\User_Skins\User_Default.png" />
+    <Resource Include="img\skins\User_Skins\w3ci6oxz.png" />
     <Resource Include="img\Space_Background.png" />
   </ItemGroup>
 

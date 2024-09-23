@@ -14,7 +14,6 @@ namespace Space_Shooters.classes.Game.Game_EntityHandling
     public class WaveNumberHandling
     {
         internal bool _waveStarted = true;
-
     }
 
     public class WaveNumber : INotifyPropertyChanged
