@@ -15,36 +15,64 @@
         <Viewbox Grid.Column="1">
             <StackPanel>
                 <Viewbox Margin="0,60,0,90">
+<<<<<<< HEAD
                     <local:OutlinedTextControl Text="Space Shooters" FontSize="48" FontFamily="{StaticResource Montserrat Title}" Stroke="#DFC900" StrokeThickness="2" />
                 </Viewbox>
                 <Button Name="btPlay" Click="PlayGame" Width="300" Height="25" Background="Black" BorderBrush="#DFC900" Margin="0,0,0,8" Cursor="Hand">
                     <Viewbox>
                         <local:OutlinedTextControl Text="Play" Height="30" FontSize="22" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2" HorizontalAlignment="Center" Margin="0,3,0,0" />
+=======
+                    <local:OutlinedTextControl Text="Space Shooters" FontSize="48" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2" />
+                </Viewbox>
+                <Button Name="btPlay" Click="PlayGame" Width="300" Height="25" Background="Black" BorderBrush="#DFC900" Margin="0,0,0,8" Cursor="Hand">
+                    <Viewbox>
+                        <local:OutlinedTextControl Text="Play" Height="30" FontSize="22" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2" HorizontalAlignment="Center" Margin="0,3,0,0" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     </Viewbox>
                 </Button>
                 <Button Name="btCharacter" Click="Character" Width="300" Height="20" Background="Black" BorderBrush="#DFC900" Margin="0,0,0,8" Cursor="Hand">
                     <Viewbox>
+<<<<<<< HEAD
                         <local:OutlinedTextControl Text="Character" FontSize="24" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2" />
+=======
+                        <local:OutlinedTextControl Text="Character" FontSize="24" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     </Viewbox>
                 </Button>
                 <Button Name="btInventory" Click="Inventory" Width="300" Height="20" Background="Black" BorderBrush="#DFC900" Margin="0,0,0,8" Cursor="Hand">
                     <Viewbox>
+<<<<<<< HEAD
                         <local:OutlinedTextControl Text="Inventory" FontSize="24" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2" />
+=======
+                        <local:OutlinedTextControl Text="Inventory" FontSize="24" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     </Viewbox>
                 </Button>
                 <Button Name="btItemShop" Click="ItemShop" Width="300" Height="20" Background="Black" BorderBrush="#DFC900" Margin="0,0,0,8" Cursor="Hand">
                     <Viewbox>
+<<<<<<< HEAD
                         <local:OutlinedTextControl Text="Item Shop" FontSize="24" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2" />
+=======
+                        <local:OutlinedTextControl Text="Item Shop" FontSize="24" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     </Viewbox>
                 </Button>
                 <Button Name="btSettings" Click="Settings" Width="300" Height="20" Background="Black" BorderBrush="#DFC900" Margin="0,0,0,8" Cursor="Hand">
                     <Viewbox>
+<<<<<<< HEAD
                         <local:OutlinedTextControl Text="Settings" FontSize="24" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2" />
+=======
+                        <local:OutlinedTextControl Text="Settings" FontSize="24" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     </Viewbox>
                 </Button>
                 <Button Name="btExitToDesktop" Click="ExitToDesktop" Width="300" Height="20" Background="Black" BorderBrush="#DFC900" Margin="0,0,0,8" >
                     <Viewbox>
+<<<<<<< HEAD
                         <local:OutlinedTextControl Text="Exit to desktop" FontSize="24" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2" />
+=======
+                        <local:OutlinedTextControl Text="Exit to desktop" FontSize="24" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     </Viewbox>
                 </Button>
             </StackPanel>

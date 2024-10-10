@@ -14,7 +14,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static Space_Shooters.classes.General.User_DataHandling.UserModels;
+<<<<<<< HEAD
 using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 using System.Windows.Shapes;
 using System.Reflection;
 using Space_Shooters.classes.ItemShop;
@@ -32,18 +35,28 @@ namespace Space_Shooters.views
         public Skins(ViewHandler VarViewHandler)
         {
             InitializeComponent();
+<<<<<<< HEAD
             CheckPurchasedSkins();
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             LoadSkins();    
             this.VarViewHandler = VarViewHandler;
         }
         public void LoadSkins()
         {
+<<<<<<< HEAD
             lbSkinsInventory.Items?.Clear();
             
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             // Adjust the path to point to the project directory
             var d = new DirectoryInfo(System.IO.Path.Combine(basePath, "..\\..\\..\\img\\skins\\User_Skins\\"));
             int i = 0;
+=======
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            // Adjust the path to point to the project directory
+            var d = new DirectoryInfo(System.IO.Path.Combine(basePath, "..\\..\\..\\img\\skins\\User_Skins\\"));
+
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             if (!d.Exists)
             {
                 // Handle the case where the directory does not exist
@@ -53,6 +66,7 @@ namespace Space_Shooters.views
 
             foreach (FileInfo fi in d.GetFiles())
             {
+<<<<<<< HEAD
                 string skinName = fi.Name.Remove(fi.Name.Length - 4);
                 if (!_UserModel.OwnedUserSkins.ContainsKey(skinName) && !_UserModel.LockedUserSkins.ContainsKey(skinName))
                 {
@@ -96,12 +110,44 @@ namespace Space_Shooters.views
                     otEquip.Text = "Equipped";
                 }
             }
+=======
+                ListBoxItem container = new()
+                {
+                    Height = 75,
+                    Width = 75,
+                    BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFC900")),
+                    Background = Brushes.Transparent,
+                    IsHitTestVisible = true,
+                    Tag = fi.Name.Remove(fi.Name.Length - 4),
+                    Margin = new Thickness(5, 2, 0, 3)
+                };
+
+                Image image = new()
+                {
+                    Width = 70,
+                    Height = 70,
+                    Source = new BitmapImage(new Uri(System.IO.Path.Combine(basePath, "..\\..\\..\\img\\skins\\User_Skins\\", fi.Name), UriKind.RelativeOrAbsolute)),
+                    Margin = new Thickness(0, 2, 0, 0)
+
+                };
+                container.Selected += SkinSelect;
+
+                container.Content = image;
+
+                lbSkinsInventory.Items.Add(container);
+            }
+
+            imgSelectedSkin.Source = new BitmapImage(new Uri(System.IO.Path.Combine(basePath, "..\\..\\..\\img\\skins\\User_Skins\\" + _UserModel.Skin + ".png"), UriKind.RelativeOrAbsolute));
+            tbSkinName.Text = _UserModel.Skin.Replace("_", " ");
+            otEquip.Text = "Equipped";
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         }
 
         private void SkinSelect(object sender, RoutedEventArgs e)
         {
             if (sender is ListBoxItem listBoxItem)
             {
+<<<<<<< HEAD
                 string tag = listBoxItem.Tag.ToString();
                 string[] values = tag.Split(',');
 
@@ -151,14 +197,31 @@ namespace Space_Shooters.views
                     imgSelectedSkin.Source = ((Image)listBoxItem.Content).Source;
                     tbSkinName.Text = skinName.Replace("_", " ");
                 }
+=======
+                // Handle the button click event
+                if(listBoxItem.Tag.ToString() != _UserModel.Skin)
+                {
+                    otEquip.Text = "Equip";
+                }
+                else
+                {
+                    otEquip.Text = "Equipped";
+                }
+                imgSelectedSkin.Source = ((Image)listBoxItem.Content).Source;
+                tbSkinName.Text = listBoxItem.Tag.ToString().Replace("_", " ");
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             }
         }
         public void Equip(object sender, RoutedEventArgs e)
         {
             _UserModel.Skin = tbSkinName.Text.Replace(" ", "_");
             otEquip.Text = "Equipped";
+<<<<<<< HEAD
             GameMenu.UpdateSkinStatic();
             UpdateSkin(_UserModel.SkinId);
+=======
+            PlayerDataHandling.UpdateSkin(_UserModel.Skin);
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         }
         public void Return(object sender, RoutedEventArgs e)
         {

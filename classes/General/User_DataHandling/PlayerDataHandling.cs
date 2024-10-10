@@ -13,6 +13,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Space_Shooters.Models;
+<<<<<<< HEAD
+=======
+using Space_Shooters.Context;
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 using Space_Shooters.classes.Game.Game_VariableHandling;
 using static Space_Shooters.classes.General.User_DataHandling.UserModels;
 using static Space_Shooters.classes.Game.Game_EntityHandling.WaveNumber;
@@ -21,6 +25,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using Space_Shooters.views;
 using Microsoft.Identity.Client.NativeInterop;
+<<<<<<< HEAD
 using Microsoft.VisualBasic.ApplicationServices;
 using Azure.Core;
 using Space_Shooters.Context;
@@ -35,11 +40,14 @@ using Space_Shooters.classes.UserShop;
 using Space_Shooters.classes.General.Shop_DataHandling;
 using System.IO;
 using System.Security.Cryptography;
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 
 namespace Space_Shooters.classes.General.User_DataHandling
 {
     internal class PlayerDataHandling
     {
+<<<<<<< HEAD
         static bool ran = false;
         internal static Dictionary<int, Tuple<Image, OutlinedTextControl>> EquipmentSlotMap = [];
         internal static Tuple<int, int, int, int> PreviousBoosts;
@@ -51,6 +59,15 @@ namespace Space_Shooters.classes.General.User_DataHandling
                 UserGameStat userGameStatsClass = new();
                 string userSkinString = "";
                 int userSkinId = 0;
+=======
+        public static void GetStatsFromDB()
+        {
+            try
+            { 
+                UserStat userStatsClass = new();
+                UserGameStat userGameStatsClass = new();
+                string userSkinString = "";
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 using var context = new GameContext();
                 // Assuming you have a primary key 'Id' in your UserStats table
                 var userStats = context.UserStats.FirstOrDefault(us => us.UserId == MainWindow.UserId);
@@ -76,6 +93,7 @@ namespace Space_Shooters.classes.General.User_DataHandling
                     userGameStatsClass.HitShots = userGameStats.HitShots;
                     userGameStatsClass.AverageAccuracy = userGameStats.AverageAccuracy;
                 }
+<<<<<<< HEAD
                 var userSkin = context.UserSkins
                     .First(ugs => ugs.UserId == MainWindow.UserId);
                 if (userSkin != null)
@@ -93,12 +111,23 @@ namespace Space_Shooters.classes.General.User_DataHandling
                     LockedUserSkins = [],
                     Skin = userSkinString,
                     SkinId = userSkinId,
+=======
+                var userSkin = context.UserSkins.FirstOrDefault(ugs => ugs.UserId == MainWindow.UserId);
+                if (userSkin != null)
+                {
+                    userSkinString = userSkin.Skin;
+                }
+                _UserModel = new()
+                {
+                    Skin = userSkinString,
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     UserStat = userStatsClass,
                     UserGameStat = userGameStatsClass
                 };
             }
             catch (Exception e)
             {
+<<<<<<< HEAD
                 MessageBox.Show($"{e.Message} {e.Source} {e.TargetSite}");
             }
         }
@@ -139,6 +168,12 @@ namespace Space_Shooters.classes.General.User_DataHandling
 
         }
         public static void UpdateSkin(int equippedSkin)
+=======
+                MessageBox.Show(e.Message);
+            }
+        }
+        public static void UpdateSkin(string equippedSkin)
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         {
             try
             {
@@ -147,12 +182,20 @@ namespace Space_Shooters.classes.General.User_DataHandling
                 var userSkins = context.UserSkins.FirstOrDefault(ugs => ugs.UserId == MainWindow.UserId);
 
                 // Update
+<<<<<<< HEAD
                 userSkins.SkinId = equippedSkin;
+=======
+                userSkins.Skin = equippedSkin;
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 context.SaveChanges();
             }
             catch (Exception e)
             {
+<<<<<<< HEAD
                 MessageBox.Show($"{e.Message} {e.Source} {e.TargetSite}");
+=======
+                MessageBox.Show(e.Message);
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             }
 
         }
@@ -184,7 +227,11 @@ namespace Space_Shooters.classes.General.User_DataHandling
             }
             catch (Exception e)
             {
+<<<<<<< HEAD
                 MessageBox.Show($"{e.Message} {e.Source} {e.TargetSite}");
+=======
+                MessageBox.Show(e.Message);
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             }
 
         }
@@ -192,8 +239,11 @@ namespace Space_Shooters.classes.General.User_DataHandling
         {
             try
             {
+<<<<<<< HEAD
                 RemoveTempBoost();
 
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 using var context = new GameContext();
                 // Read
                 var userStats = context.UserStats.FirstOrDefault(ugs => ugs.UserId == MainWindow.UserId);
@@ -209,15 +259,22 @@ namespace Space_Shooters.classes.General.User_DataHandling
             }
             catch (Exception e)
             {
+<<<<<<< HEAD
                 MessageBox.Show($"{e.Message} {e.Source} {e.TargetSite}");
+=======
+                MessageBox.Show(e.Message);
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             }
         }
         public static void UpdatePlayerLevel()
         {
             try
             {
+<<<<<<< HEAD
                 RemoveTempBoost();
 
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 using var context = new GameContext();
                 // Read
                 var userStats = context.UserStats.First(ugs => ugs.UserId == MainWindow.UserId);
@@ -232,6 +289,7 @@ namespace Space_Shooters.classes.General.User_DataHandling
             }
             catch (Exception e)
             {
+<<<<<<< HEAD
                 MessageBox.Show($"{e.Message} {e.Source} {e.TargetSite}");
             }
         }
@@ -239,18 +297,29 @@ namespace Space_Shooters.classes.General.User_DataHandling
         *                  ITEM HANDLING
         */
         public static ListBox RetrieveInventoryItems()
+=======
+                MessageBox.Show(e.Message);
+            }
+        }
+        public static void RetrieveInventoryItems()
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         {
             try
             {
                 using var context = new GameContext();
 
+<<<<<<< HEAD
                 var userInventory = context.UserItemInventories
+=======
+                var userInventory = context.UserInventories
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     .Where(ui => ui.UserId == MainWindow.UserId)
                     .Select(ui => new
                     {
                         ui.Item.Skin,
                         ui.Item.Name,
                         ui.ItemId,
+<<<<<<< HEAD
                         ui.Item.Worth,
                         ui.Amount
                     })
@@ -283,6 +352,12 @@ namespace Space_Shooters.classes.General.User_DataHandling
 
                 // Apply the custom style to the ListBox
                 listBox.ItemContainerStyle = listBoxItemStyle;
+=======
+                        ui.Amount,
+                        ui.Level
+                    })
+                    .ToArray();
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 
                 foreach (var item in userInventory)
                 {
@@ -294,6 +369,7 @@ namespace Space_Shooters.classes.General.User_DataHandling
                             Width = 75,
                             BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFC900")),
                             Background = Brushes.Transparent,
+<<<<<<< HEAD
                             IsHitTestVisible = true,
                             Margin = new Thickness(5, 2, 0, 3)
                         };
@@ -302,6 +378,13 @@ namespace Space_Shooters.classes.General.User_DataHandling
                         {
                             Tag = $"{item.ItemId},{0},{item.Worth}"
                         };
+=======
+                            IsHitTestVisible = false,
+                            Margin = new Thickness(5, 2, 0, 3)
+                        };
+
+                        StackPanel stackPanel = new();
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 
                         Image image = new()
                         {
@@ -318,7 +401,11 @@ namespace Space_Shooters.classes.General.User_DataHandling
                             FontFamily = new FontFamily("Inter"),
                             Width = 75,
                             TextAlignment = TextAlignment.Center,
+<<<<<<< HEAD
                             FontSize = 9,
+=======
+                            FontSize = 10,
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                             Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFC900")),
                             Opacity = 0.6,
                             Margin = new Thickness(0, 0, 0, 0)
@@ -342,6 +429,7 @@ namespace Space_Shooters.classes.General.User_DataHandling
                         stackPanel.Children.Add(image);
                         stackPanel.Children.Add(viewbox);
                         stackPanel.Children.Add(viewbox2);
+<<<<<<< HEAD
                         stackPanel.MouseLeftButtonDown += InventorySelect;
                         container.Content = stackPanel;
 
@@ -359,13 +447,100 @@ namespace Space_Shooters.classes.General.User_DataHandling
         }
 
         public static void AddItemsToInventory(int itemId, int itemAmount)
+=======
+                        container.Content = stackPanel;
+
+                        views.Inventory.ItemsList.Items.Add(container);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+        }
+        public static void RetrieveInventoryEquipment()
+        {
+            try
+            {
+                using var context = new GameContext();
+
+                var userInventory = context.UserEquipments
+                    .Where(ui => ui.UserId == MainWindow.UserId)
+                    .Select(ui => new
+                    {
+                        ui.ItemId,
+                        ui.Item.Name,
+                        ui.Item.Skin,
+
+                    })
+                    .ToArray();
+
+                foreach (var item in userInventory)
+                {
+                    if (item.ItemId != 1)
+                    {
+                        ListBoxItem container = new()
+                        {
+                            Height = 75,
+                            Width = 75,
+                            BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFC900")),
+                            Background = Brushes.Transparent,
+                            IsHitTestVisible = false,
+                            Margin = new Thickness(5, 2, 0, 3)
+                        };
+
+                        StackPanel stackPanel = new();
+
+                        Image image = new()
+                        {
+                            Width = 50,
+                            Height = 50,
+                            Source = new BitmapImage(new Uri("..\\img\\skins\\Equipment_Skins\\" + item.Skin + ".png", UriKind.Relative)),
+                            Margin = new Thickness(0, 2, 0, 0)
+                        };
+
+                        Viewbox viewbox = new();
+                        TextBlock textBlock = new()
+                        {
+                            Text = item.Name,
+                            FontFamily = new FontFamily("Inter"),
+                            Width = 75,
+                            TextAlignment = TextAlignment.Center,
+                            FontSize = 10,
+                            Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DFC900")),
+                            Opacity = 0.6,
+                            Margin = new Thickness(0, 0, 0, 0)
+                        };
+
+                        viewbox.Child = textBlock;
+                        stackPanel.Children.Add(image);
+                        stackPanel.Children.Add(viewbox);
+                        container.Content = stackPanel;
+
+                        views.Inventory.ItemsList.Items.Add(container);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+        public static void AddItemsToInventory(int itemId, int ItemLevel, int itemAmount)
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         {
             try
             {
                 using var context = new GameContext();
 
                 // Read existing inventory
+<<<<<<< HEAD
                 var userInventory = context.UserItemInventories
+=======
+                var userInventory = context.UserInventories
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                     .Where(ui => ui.UserId == MainWindow.UserId)
                     .Where(ui => ui.ItemId == itemId)
                     .FirstOrDefault();
@@ -374,19 +549,29 @@ namespace Space_Shooters.classes.General.User_DataHandling
                 {
                     // Insert new entry using raw SQL
                     context.Database.ExecuteSqlRaw(
+<<<<<<< HEAD
                         "INSERT INTO user_item_inventory (user_id, item_id, amount) VALUES ({0}, {1}, {2})",
                         MainWindow.UserId, itemId, itemAmount);
+=======
+                        "INSERT INTO user_inventory (user_id, item_id, level, amount) VALUES ({0}, {1}, {2}, {3})",
+                        MainWindow.UserId, itemId, ItemLevel, itemAmount);
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 }
                 else
                 {
                     // Update existing record
                     context.Database.ExecuteSqlRaw(
+<<<<<<< HEAD
                         "UPDATE user_item_inventory SET amount = {0} WHERE user_id = {1} AND item_id = {2}",
+=======
+                        "UPDATE user_inventory SET amount = {0} WHERE user_id = {1} AND item_id = {2}",
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                         userInventory.Amount + itemAmount, MainWindow.UserId, itemId);
                 }
             }
             catch (Exception e)
             {
+<<<<<<< HEAD
                 MessageBox.Show($"{e.Message} {e.Source} {e.TargetSite}");
             }
         }
@@ -1256,3 +1441,10 @@ namespace Space_Shooters.classes.General.User_DataHandling
     }
 }
 
+=======
+                MessageBox.Show(e.Message);
+            }
+        }
+    }
+}
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48

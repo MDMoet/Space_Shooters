@@ -34,22 +34,38 @@
                             <WrapPanel Width="300">
                                 <Button Name="btEasy" Width="63" Height="20" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1" Margin="24,0,0,8" Click="btEasy_Click" Cursor="Hand" >
                                     <Viewbox>
+<<<<<<< HEAD
                                         <local:OutlinedTextControl Text="Easy" Height="30" FontSize="22" FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2.5" />
+=======
+                                        <local:OutlinedTextControl Text="Easy" Height="30" FontSize="22" FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2.5" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Viewbox>
                                 </Button>
                                 <Button Name="btMedium"  Width="62.5" Height="20" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1" Margin="0,0,0,8" Click="btMedium_Click" Cursor="Hand" >
                                     <Viewbox>
+<<<<<<< HEAD
                                         <local:OutlinedTextControl Text="Medium" Height="30" FontSize="22"  FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2.5" />
+=======
+                                        <local:OutlinedTextControl Text="Medium" Height="30" FontSize="22"  FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2.5" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Viewbox>
                                 </Button>
                                 <Button Name="btHard"  Width="62.5" Height="20" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1" Margin="0,0,0,8" Click="btHard_Click" Cursor="Hand" >
                                     <Viewbox>
+<<<<<<< HEAD
                                         <local:OutlinedTextControl Text="Hard" Height="30" FontSize="22"  FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2.5" />
+=======
+                                        <local:OutlinedTextControl Text="Hard" Height="30" FontSize="22"  FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2.5" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Viewbox>
                                 </Button>
                                 <Button Name="btExtreme" Width="62" Height="20" Background="Transparent" BorderBrush="#DFC900" BorderThickness="1" Margin="0,0,0,8" Click="btExtreme_Click" Cursor="Hand" >
                                     <Viewbox>
+<<<<<<< HEAD
                                         <local:OutlinedTextControl Text="Extreme" Height="30" FontSize="22"  FontFamily="{StaticResource Montserrat Text}" Stroke="#DFC900" StrokeThickness="2.5" />
+=======
+                                        <local:OutlinedTextControl Text="Extreme" Height="30" FontSize="22"  FontFamily="Montserrat Subrayada" Stroke="#DFC900" StrokeThickness="2.5" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Viewbox>
                                 </Button>
                             </WrapPanel>

@@ -16,7 +16,10 @@ using System.Windows.Shapes;
 using Space_Shooters.classes;
 using Space_Shooters.views;
 using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
+<<<<<<< HEAD
 using static Space_Shooters.classes.General.User_DataHandling.UserKeyBinds;
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 using Space_Shooters.classes.Game.Game_DataHandling;
 using Space_Shooters.classes.Game.Game_EntityHandling;
 
@@ -36,6 +39,10 @@ namespace Space_Shooters
         {
             InitializeComponent();
             // Get the stats from the database
+<<<<<<< HEAD
+=======
+            GetStatsFromDB();
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             VarViewHandler = new ViewHandler();
             DataContext = VarViewHandler;
 

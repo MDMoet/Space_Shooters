@@ -73,7 +73,11 @@
         <Viewbox Grid.Column="1">
             <StackPanel>
                 <Viewbox Margin="0,10,0,10" HorizontalAlignment="Center" >
+<<<<<<< HEAD
                     <local:OutlinedTextControl Text="Equipment" Width="200" FontSize="30" Style="{StaticResource OutlinedTextStyle}" FontFamily="{StaticResource Montserrat Title}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+=======
+                    <local:OutlinedTextControl Text="Equipment" Width="200" FontSize="30" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 </Viewbox>
                 <Border Width="500" Height="380" Background="Black" Margin="0,0,0,25" Style="{StaticResource CommonBorderStyle}">
                     <Grid>
@@ -95,6 +99,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 
+<<<<<<< HEAD
                                 <local:OutlinedTextControl x:Name="tbSlot1" Text="" FontSize="10" Style="{StaticResource OutlinedTextStyle}" Grid.Column="1" HorizontalAlignment="Center" StrokeThickness="1.2"/>
                                 <local:OutlinedTextControl x:Name="tbSlot2" Text="" FontSize="10" Style="{StaticResource OutlinedTextStyle}" Grid.Column="3" HorizontalAlignment="Center" StrokeThickness="1.2"/>
                                 <local:OutlinedTextControl x:Name="tbSlot3" Text="" FontSize="10" Style="{StaticResource OutlinedTextStyle}" Grid.Column="5" HorizontalAlignment="Center" StrokeThickness="1.2"/>
@@ -114,14 +119,33 @@
                                 <Border Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="5" Grid.Row="1" MouseLeftButtonDown="ItemSlotThree" Cursor="Hand">
                                     <Image Width="70" Height="70" x:Name="imgEquipmentSlot3" />
                                 </Border>
+=======
+                                <local:OutlinedTextControl Text="item name" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Grid.Column="1" HorizontalAlignment="Center" StrokeThickness="1.2"/>
+                                <local:OutlinedTextControl Text="item name" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Grid.Column="3" HorizontalAlignment="Center" StrokeThickness="1.2"/>
+                                <local:OutlinedTextControl Text="item name" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Grid.Column="5" HorizontalAlignment="Center" StrokeThickness="1.2"/>
+                                <local:OutlinedTextControl Text="item name" FontSize="16" Style="{StaticResource OutlinedTextStyle}" Grid.Column="7" HorizontalAlignment="Center" StrokeThickness="1.2"/>
+
+                                <Border Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="1" Grid.Row="1" MouseLeftButtonDown="ItemSlotOne" Cursor="Hand" />
+                                <Border Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="3" Grid.Row="1" MouseLeftButtonDown="ItemSlotTwo" Cursor="Hand"/>
+                                <Border x:Name="boLvl5" Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="3" Grid.Row="1">
+                                    <Viewbox>
+                                        <local:OutlinedTextControl Text="Level 5&#x0a;required" FontSize="10" Style="{StaticResource OutlinedTextStyle}" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="0.8"/>
+                                    </Viewbox>
+                                </Border>
+                                <Border Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="5" Grid.Row="1" MouseLeftButtonDown="ItemSlotThree" Cursor="Hand"/>
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                 <Border x:Name="boLvl10" Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="5" Grid.Row="1">
                                     <Viewbox>
                                         <local:OutlinedTextControl Text="Level 10&#x0a;required" FontSize="10" Style="{StaticResource OutlinedTextStyle}" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="0.8"/>
                                     </Viewbox>
                                 </Border>
+<<<<<<< HEAD
                                 <Border Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="7" Grid.Row="1" MouseLeftButtonDown="ItemSlotFour" Cursor="Hand">
                                     <Image Width="70" Height="70" x:Name="imgEquipmentSlot4" />
                                 </Border>
+=======
+                                <Border Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="7" Grid.Row="1" MouseLeftButtonDown="ItemSlotFour" Cursor="Hand"/>
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                 <Border x:Name="boLvl20" Height="75" Width="75" Background="Transparent" Style="{StaticResource CommonBorderStyle}" Grid.Column="7" Grid.Row="1">
                                     <Viewbox>
                                         <local:OutlinedTextControl Text="Level 20&#x0a;required" FontSize="10" Style="{StaticResource OutlinedTextStyle}" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" StrokeThickness="0.8"/>
@@ -143,7 +167,11 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
+<<<<<<< HEAD
                                         <ColumnDefinition Width="70" />
+=======
+                                        <ColumnDefinition Width="50" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="3*"  />
@@ -164,6 +192,7 @@
                                     <local:OutlinedTextControl Text="STATS:" FontSize="14" Style="{StaticResource OutlinedTextStyle}" Grid.Row="0" Grid.ColumnSpan="2" Margin="2" HorizontalAlignment="Center" StrokeThickness="1.2" />
                                     
                                     <local:OutlinedTextControl Text="Health:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Grid.Row="2" Grid.Column="0" Margin="5" StrokeThickness="1.2" />
+<<<<<<< HEAD
                                     <local:OutlinedTextControl x:Name="tbHealth" Text="{Binding PlayerHP}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Margin="5" StrokeThickness="1.2" />
                                     <local:OutlinedTextControl x:Name="tbHealthExtra" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
                                     <local:OutlinedTextControl Text="Damage:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Grid.Row="4" Grid.Column="0" Margin="5" StrokeThickness="1.2" />
@@ -175,12 +204,25 @@
                                     <local:OutlinedTextControl Text="Movement Speed:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Grid.Row="8" Grid.Column="0" Margin="5" StrokeThickness="1.2" />
                                     <local:OutlinedTextControl x:Name="tbMS" Text="{Binding PlayerMS}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" Margin="5" StrokeThickness="1.2" />
                                     <local:OutlinedTextControl x:Name="tbMSExtra" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+=======
+                                    <local:OutlinedTextControl x:Name="tbHealth" Text="{Binding PlayerHP}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+                                    <local:OutlinedTextControl Text="Damage:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Grid.Row="4" Grid.Column="0" Margin="5" StrokeThickness="1.2" />
+                                    <local:OutlinedTextControl x:Name="tbDamage" Text="{Binding PlayerDamage}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+                                    <local:OutlinedTextControl Text="Attack Speed:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Grid.Row="6" Grid.Column="0" Margin="5" StrokeThickness="1.2" />
+                                    <local:OutlinedTextControl x:Name="tbAS" Text="{Binding PlayerAS}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+                                    <local:OutlinedTextControl Text="Movement Speed:" FontSize="12" Style="{StaticResource OutlinedTextStyle}" Grid.Row="8" Grid.Column="0" Margin="5" StrokeThickness="1.2" />
+                                    <local:OutlinedTextControl x:Name="tbMS" Text="{Binding PlayerMS}" FontSize="12" Style="{StaticResource StatsTitleStyle}" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" Margin="5" StrokeThickness="1.2" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                 </Grid>
                             </Border>
 
                             <Button Width="400" Height="25" Name="btReturn" Click="Return" Style="{StaticResource CommonButtonStyle}" Cursor="Hand">
                                 <Viewbox>
+<<<<<<< HEAD
                                     <local:OutlinedTextControl Text="Return" Width="80" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
+=======
+                                    <local:OutlinedTextControl Text="Return" Width="100" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                 </Viewbox>
                             </Button>
                         </StackPanel>

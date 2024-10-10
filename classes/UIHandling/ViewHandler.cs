@@ -37,9 +37,14 @@ namespace Space_Shooters.classes
 
         public ViewHandler()
         {
+<<<<<<< HEAD
             UserModels.ViewHistory = [];
              _view = new views.Register(this);
             SetPreviousView(_view);
+=======
+            // Default view is the main menu
+            _view = new views.MainMenu(this); // Initialize the _view field to avoid CS8618 error
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         }
 
         public void GoToMainMenu()
@@ -63,7 +68,10 @@ namespace Space_Shooters.classes
         public void GoToInventory()
         {
             View = new views.Inventory(this);
+<<<<<<< HEAD
             SetPreviousView(View);
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         }
 
         public void GoToItemShop()
@@ -81,7 +89,10 @@ namespace Space_Shooters.classes
         public void GoToEquipment()
         {
             View = new views.Equipment(this);
+<<<<<<< HEAD
             SetPreviousView(View);
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         }
 
         public void GoToSkins()

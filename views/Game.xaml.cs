@@ -46,6 +46,10 @@ namespace Space_Shooters.views
         {
             InitializeComponent();
             VariableInitialize();
+<<<<<<< HEAD
+=======
+            GetDataFromDB();
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 
             // Set the view in the ViewHandler to this view
             this.VarViewHandler = PassedViewHandler;

@@ -5,7 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Space_Shooters.classes.General.User_DataHandling.UserModels;
+<<<<<<< HEAD
 using static Space_Shooters.classes.Game.Game_PlayerHandling.PlayerGameHPHandler;
+=======
+using static Space_Shooters.classes.Game.Game_PlayerHandling.PlayerHPHandler;
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 using static Space_Shooters.classes.Game.Game_VariableHandling.DifficultyHandling;
 using static Space_Shooters.views.Game;
 using Space_Shooters.classes.Game.Game_UIHandling;

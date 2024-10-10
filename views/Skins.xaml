@@ -49,7 +49,11 @@
         <Viewbox Grid.Column="1">
             <StackPanel>
                 <Viewbox Margin="0,10,0,10" HorizontalAlignment="Center" >
+<<<<<<< HEAD
                     <local:OutlinedTextControl Text="Skins" Width="95" FontSize="30" FontFamily="{StaticResource Montserrat Title}" Stroke="#DFC900" StrokeThickness="1.5" HorizontalAlignment="Center" />
+=======
+                    <local:OutlinedTextControl Text="Skins" Width="95" FontSize="30" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 </Viewbox>
                 <Border Width="500" Height="380" Background="Black" Margin="0,0,0,25" Style="{StaticResource CommonBorderStyle}">
                     <Grid>
@@ -93,8 +97,13 @@
                                         <Image x:Name="imgSelectedSkin" /> 
                                     </Border>
                                 </Grid>
+<<<<<<< HEAD
                                 <Viewbox Margin="20,-15,0,0" HorizontalAlignment="Center" >
                                     <local:OutlinedTextControl x:Name="tbSkinName" Text="No Skin selected" FontSize="20" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Left" />
+=======
+                                <Viewbox Margin="25,-15,0,0" HorizontalAlignment="Center" >
+                                    <local:OutlinedTextControl x:Name="tbSkinName" Text="No Skin selected" FontSize="20" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                 </Viewbox>
                                 <Button Width="251" Height="25" Name="btEquip" Click="Equip"  Style="{StaticResource CommonButtonStyle}" Cursor="Hand" Margin="20,4,0,0">
                                     <Viewbox>
@@ -103,7 +112,11 @@
                                 </Button>
                                 <Button Width="251" Height="25" Name="btReturn" Click="Return"  Style="{StaticResource CommonButtonStyle}" Cursor="Hand" Margin="20,4,0,0">
                                     <Viewbox>
+<<<<<<< HEAD
                                         <local:OutlinedTextControl Text="Return" Width="80" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
+=======
+                                        <local:OutlinedTextControl Text="Return" Width="100" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Viewbox>
                                 </Button>
                             </StackPanel>

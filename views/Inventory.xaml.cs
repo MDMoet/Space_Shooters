@@ -12,7 +12,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using static Space_Shooters.classes.General.User_DataHandling.PlayerDataHandling;
+<<<<<<< HEAD
 using static Space_Shooters.classes.General.User_DataHandling.UserModels;
+=======
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 using System.Windows.Shapes;
 
 namespace Space_Shooters.views
@@ -23,21 +26,36 @@ namespace Space_Shooters.views
 
     public partial class Inventory : UserControl
     {
+<<<<<<< HEAD
+=======
+        internal static ListBox EquipmentList;
+        internal static ListBox ItemsList;
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 
         private readonly ViewHandler VarViewHandler;
         public Inventory(ViewHandler VarViewHandler)
         {
             InitializeComponent();
+<<<<<<< HEAD
             boItemInventory.Child = RetrieveInventoryItems();
             boEquipmentInventory.Child = RetrieveInventoryEquipment();
 
             SelectAction = "Inventory";
+=======
+            ItemsList = lbItemInventory;
+            EquipmentList = lbEquipmentInventory;
+            RetrieveInventoryItems();
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
 
             this.VarViewHandler = VarViewHandler;
         }
         public void Return(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             VarViewHandler.Return();
+=======
+            VarViewHandler.GoToMainMenu();
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
         }
     }
    

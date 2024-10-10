@@ -12,7 +12,11 @@
     <UserControl.Resources>
         <!-- Common Font and Stroke Style for OutlinedTextControl -->
         <Style x:Key="OutlinedTextStyle" TargetType="{x:Type local:OutlinedTextControl}">
+<<<<<<< HEAD
             <Setter Property="FontFamily" Value="{StaticResource Montserrat Text}" />
+=======
+            <Setter Property="FontFamily" Value="Montserrat Subrayada" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
             <Setter Property="Stroke" Value="#DFC900" />
             <Setter Property="StrokeThickness" Value="2.5" />
         </Style>
@@ -49,7 +53,11 @@
         <Viewbox Grid.Column="1">
             <StackPanel>
                 <Viewbox Margin="0,10,0,10" HorizontalAlignment="Center" >
+<<<<<<< HEAD
                     <local:OutlinedTextControl Text="Inventory" Width="190" FontSize="30" Style="{StaticResource OutlinedTextStyle}" FontFamily="{StaticResource Montserrat Title}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+=======
+                    <local:OutlinedTextControl Text="Inventory" Width="190" FontSize="30" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                 </Viewbox>
                 <Border Width="500" Height="380" Background="Black" Margin="0,0,0,25" Style="{StaticResource CommonBorderStyle}">
                     <Grid>
@@ -64,10 +72,27 @@
                                     <RowDefinition Height="1*" />
                                 </Grid.RowDefinitions>
                                 <Viewbox Margin="0,0,0,5" HorizontalAlignment="Center" >
+<<<<<<< HEAD
                                     <local:OutlinedTextControl Text="Items:" Width="65" FontSize="20" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
                                 </Viewbox>
                                 <Border x:Name="boItemInventory" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="169" Grid.RowSpan="10" Style="{StaticResource CommonBorderStyle}">
                                   
+=======
+                                    <local:OutlinedTextControl Text="Items:" Width="70" FontSize="20" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+                                </Viewbox>
+                                <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="169" Grid.RowSpan="10" Style="{StaticResource CommonBorderStyle}">
+                                    <ListBox x:Name="lbItemInventory" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0,2,0,0">
+                                        <ListBox.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ListBox.ItemsPanel>
+                                        <!-- List box items:-->
+
+                                        
+                                        <!-- End of list box items-->
+                                    </ListBox>
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                 </Border>
                             </Grid>
 
@@ -82,17 +107,39 @@
                                     </Grid.RowDefinitions>
                                     
                                     <Viewbox Margin="0,0,0,5" HorizontalAlignment="Center" >
+<<<<<<< HEAD
                                         <local:OutlinedTextControl Text="Equipment:" Width="125" FontSize="20" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
                                     </Viewbox>
                                     
                                     <Border x:Name="boEquipmentInventory" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="250" Height="260" Grid.RowSpan="1" Style="{StaticResource CommonBorderStyle}">
 
+=======
+                                        <local:OutlinedTextControl Text="Equipment:" Width="135" FontSize="20" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" HorizontalAlignment="Center" />
+                                    </Viewbox>
+                                    
+                                    <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="250" Height="260" Grid.RowSpan="1" Style="{StaticResource CommonBorderStyle}">
+                                        <ListBox x:Name="lbEquipmentInventory" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0,2,0,0">
+                                            <ListBox.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ListBox.ItemsPanel>
+                                            <!-- List box items:-->
+
+                                         
+                                            <!-- End of list box items-->
+                                        </ListBox>
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Border>
                                 </Grid>
 
                                 <Button Width="251" Height="25" Name="btReturn" Click="Return"  Style="{StaticResource CommonButtonStyle}" Cursor="Hand" Margin="20,4,0,0">
                                     <Viewbox>
+<<<<<<< HEAD
                                         <local:OutlinedTextControl Text="Return" Width="80" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
+=======
+                                        <local:OutlinedTextControl Text="Return" Width="100" Height="30" FontSize="23" Style="{StaticResource OutlinedTextStyle}" StrokeThickness="1.5" Margin="0,5,0,0" />
+>>>>>>> 0f8688f88e38822a5e631e4183dc057a8afd8f48
                                     </Viewbox>
                                 </Button>
                             </StackPanel>
