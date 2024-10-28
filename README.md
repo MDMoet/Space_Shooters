@@ -1,4 +1,4 @@
-'First' school project. Started June 10th 2024.
+'First' school project. Started June 10th 2024 10/06/2024.
 
 What I've learnt:
 1. Entity Framework 
